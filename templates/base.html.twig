@@ -10,10 +10,19 @@
         {% endblock %}
 
         {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
+            {{ encore_entry_script_tags('loader') }}
         {% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
+
+        <div id="loader">
+            <p>The content is loading ...</p>
+
+            <div class="spinner">
+                <div class="inner"></div>
+            </div>
+
+        </div>
     </body>
 </html>

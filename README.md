@@ -19,7 +19,8 @@ TODO
 
 ## Technologies
 
-- Roboto Familly : [link](https://fonts.google.com/specimen/Roboto?preview.text_type=custom) (LICENCE APACHE ./assets/fonts/ROBOTO_LICENSE.txt)
+- Roboto Family : [link](https://fonts.google.com/specimen/Roboto?preview.text_type=custom) (LICENSE APACHE ./assets/fonts/ROBOTO_LICENSE.txt)
+- Permanent Marker Family : [link](https://fonts.google.com/specimen/Permanent+Marker?preview.text_type=custom) (LICENSE APACHE ./assets/fonts/ROBOTO_LICENSE.txt) 
 - Symfony : [link](https://symfony.com/) (LICENSE: MIT)
 
 (If I missed any technologies, feel free to contact me :) )
