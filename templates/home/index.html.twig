@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+
+    {% if app.user %}
+        <h1>Welcome back {{ app.user.username }}</h1>
+    {% else %}
+        <h1>Welcome to your postfix administration area</h1>
+    {% endif %}
+    <a href="{{ path('app_login') }}">Log In</a>
+
+{% endblock %}

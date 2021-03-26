@@ -1,0 +1,11 @@
+@import "main";
+
+#loginForm {
+  background: #203A43;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  &>h1 {
+    color: white;
+  }
+}
