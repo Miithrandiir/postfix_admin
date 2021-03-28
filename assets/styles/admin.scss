@@ -1,0 +1,96 @@
+@import "main";
+
+.body {
+  width: 100%;
+  flex: 1;
+  display: flex;
+
+  & > .left {
+    display: flex;
+    width: 15%;
+    flex: 1;
+    background: #203A43;
+    flex-direction: column;
+
+    & > .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      height: 200px;
+      width: 100%;
+      color: white;
+
+      & > span {
+        margin: 10px 0;
+      }
+
+      & > .logo {
+        width: 64px;
+        height: 64px;
+        border-radius: 30px;
+        background: #AAAAAA;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    & > .navigation {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      & > span {
+        color: white;
+        font-weight: 100;
+        font-family: "RobotoLight", sans-serif;
+        margin: 3px;
+      }
+
+      & > ul {
+        width: 100%;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        list-style: none;
+        flex-direction: column;
+
+        & > li {
+          width: 100%;
+          cursor: pointer;
+          align-items: center;
+          justify-content: center;
+          transition: background 300ms ease-in-out;
+
+          & > a {
+            display: flex;
+            margin: 0 auto;
+            padding: 10px 0;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            font-family: "RobotoRegular", sans-serif;
+
+          }
+
+          &:hover {
+            background: #0F2027;
+          }
+        }
+      }
+    }
+
+  }
+
+  & > .right {
+    width: 85%;
+  }
+
+}

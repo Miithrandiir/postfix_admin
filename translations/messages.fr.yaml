@@ -4,8 +4,12 @@ General:
   password: Mot de passe
   signin: Connexion
   username: Nom d'utilisateur
+  welcome: Bienvenue %name%
   welcome_back: Bon retour %name%
   welcome_message: Bienvenue dans votre panel d'administration postfix
 Login:
   title: Connexion
+Navigation:
+  dashboard: Tableau de bord
+  logout: Déconnexion
 

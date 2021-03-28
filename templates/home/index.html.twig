@@ -6,7 +6,7 @@
 
     {% if app.user %}
         <h1>{{ "General.welcome_back"|trans({'%name%': app.user.username}) }}</h1>
-        <a href="{{ path('app_login') }}">{{ 'General.dashboard'|trans }}</a>
+        <a href="{{ path('administration') }}">{{ 'General.dashboard'|trans }}</a>
     {% else %}
         <h1>{{ 'General.welcome_message'|trans }}</h1>
         <a href="{{ path('app_login') }}">{{ 'General.login'|trans }}</a>
