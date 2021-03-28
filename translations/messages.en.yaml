@@ -1,0 +1,11 @@
+General:
+  dashboard: Dashboard
+  login: Login
+  password: Password
+  signin: Sign in
+  username: Username
+  welcome_back: Welcome back %name%
+  welcome_message: Welcome to your postfix administration area
+Login:
+  title: Connection
+
