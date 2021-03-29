@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -34,6 +36,16 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Mailbox::class, mappedBy="userÃ")
+     */
+    private $mailboxes;
+
+    public function __construct()
+    {
+        $this->mailboxes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -109,5 +121,35 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|Mailbox[]
+     */
+    public function getMailboxes(): Collection
+    {
+        return $this->mailboxes;
+    }
+
+    public function addMailbox(Mailbox $mailbox): self
+    {
+        if (!$this->mailboxes->contains($mailbox)) {
+            $this->mailboxes[] = $mailbox;
+            $mailbox->setUserÃ($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMailbox(Mailbox $mailbox): self
+    {
+        if ($this->mailboxes->removeElement($mailbox)) {
+            // set the owning side to null (unless already changed)
+            if ($mailbox->getUserÃ() === $this) {
+                $mailbox->setUserÃ(null);
+            }
+        }
+
+        return $this;
     }
 }
