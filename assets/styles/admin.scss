@@ -1,4 +1,5 @@
 @import "main";
+@import "components/dashboard_statistics";
 
 .body {
   width: 100%;
@@ -7,9 +8,12 @@
 
   & > .left {
     display: flex;
-    width: 15%;
+    width: calc(15% - 20px);
+    margin: 10px 10px 10px 0;
+    border-radius: 0 15px 15px 0;
     flex: 1;
-    background: #203A43;
+    //background: #203A43;
+    background: linear-gradient($primary, $secondary);
     flex-direction: column;
 
     & > .header {
@@ -24,6 +28,7 @@
 
       & > span {
         margin: 10px 0;
+        font-family: "RobotoRegular", sans-serif;
       }
 
       & > .logo {
@@ -81,7 +86,7 @@
           }
 
           &:hover {
-            background: #0F2027;
+            background: rgba(255,255,255,0.2);
           }
         }
       }
@@ -90,12 +95,13 @@
   }
 
   & > .right {
-    width: calc(85% - 40px);
-    background: #F7F7F7;
-    margin: 20px;
-    border-radius: 5px;
+    width: calc(85% - 20px);
+    background: $container;
+    margin: 10px;
+    border-radius: 15px;
     &>header{
-      background: #203A43;
+      background: linear-gradient($primary, $secondary);
+      border-radius: 15px 15px 0 0;
       padding: 5px;
       &>h1 {
         text-align: center;
