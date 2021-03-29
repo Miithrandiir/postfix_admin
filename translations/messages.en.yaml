@@ -1,6 +1,7 @@
 General:
   dashboard: Dashboard
   login: Login
+  navigation: Navigation
   password: Password
   signin: Sign in
   username: Username

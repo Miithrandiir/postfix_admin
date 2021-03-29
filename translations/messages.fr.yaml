@@ -1,6 +1,7 @@
 General:
   dashboard: Tableau de bord
   login: Connexion
+  navigation: Navigation
   password: Mot de passe
   signin: Connexion
   username: Nom d'utilisateur
