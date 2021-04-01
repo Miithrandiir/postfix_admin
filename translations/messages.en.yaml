@@ -12,5 +12,11 @@ Login:
   title: Connection
 Navigation:
   dashboard: Dashboard
+  domains: Domains
   logout: Log out
+  mailboxes: Mailboxes
+  users: Users
+Page:
+  UsersEdition:
+    users_edit: Users edition
 

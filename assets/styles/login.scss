@@ -1,7 +1,7 @@
 @import "main";
 
 #loginForm {
-  background: #203A43;
+  background: $special;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -20,14 +20,14 @@
 
   &>button {
     color: white;
-    background: #0F2027;
+    background: darken($special,10%);
     padding: 5px;
     border: none;
     cursor: pointer;
     border-radius: 3px;
     transition: background 500ms ease-in-out;
     &:hover {
-      background: rgba(#0F2027, 0.75);
+      background: lighten($special, 5%)
     }
   }
 }

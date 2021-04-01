@@ -1,5 +1,5 @@
 @import "fonts";
-
+@import "vars";
 #loader {
   position: absolute;
   top: 0;
@@ -17,7 +17,7 @@
   &>p {
     font-family: "PermanentMarkerRegular", sans-serif;
     font-size: 42px;
-    color: white;
+    color: $font-special;
   }
 
   &>.spinner {

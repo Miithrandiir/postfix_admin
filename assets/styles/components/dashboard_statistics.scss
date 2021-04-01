@@ -3,7 +3,7 @@
   width: 100%;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   margin: 20px auto;
   flex-flow: wrap;
   &>.stats-card {
@@ -15,15 +15,19 @@
     color: white;
     display: flex;
     flex-direction: row;
+    transition: background 1s ease-in-out;
     &>.icon {
-      width: 10%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 32px;
+      background: rgba(255,255,255,0.3);
+      height: 60px;
+      width: 60px;
+      border-radius: 33px;
     }
     &>.desc {
-      width: 90%;
+      width: calc(100% - 60px);
       font-family: "RobotoLight", sans-serif;
       &>span {
         display: flex;
@@ -36,7 +40,9 @@
       font-size: 22px;
       text-align: center;
     }
+    &:hover {
+      background: lighten($green, 10%);
+    }
   }
 
 }
-

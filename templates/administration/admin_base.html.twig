@@ -6,30 +6,46 @@
 {% endblock %}
 
 {% block body %}
-<div class="body">
 
-    <div class="left">
-        <div class="header">
-            <div class="logo">
-                P
+    <div class="header">
+
+        <div class="left">
+            <i class="fas fa-envelope"></i> Postfix
+        </div>
+
+        <div class="right">
+            <p><i class="fas fa-user"></i> Account</p>
+        </div>
+
+    </div>
+
+    <div class="body">
+
+        <div class="left">
+            <div class="header">
+                <div class="logo">
+                    P
+                </div>
+                <span>{{ 'General.welcome'|trans({'%name%': app.user.username }) }}</span>
             </div>
-            <span>{{ 'General.welcome'|trans({'%name%': app.user.username }) }}</span>
+
+            <div class="navigation">
+                <span>{{ "General.navigation"|trans|upper }}</span>
+                <ul>
+                    <li><a href="{{ path('administration') }}">{{ 'Navigation.dashboard'|trans }}</a></li>
+                    <li><a href="{{ path('administration') }}">{{ 'Navigation.users'|trans }}</a></li>
+                    <li><a href="{{ path('administration') }}">{{ 'Navigation.domains'|trans }}</a></li>
+                    <li><a href="{{ path('administration') }}">{{ 'Navigation.mailboxes'|trans }}</a></li>
+                    <li><a href="{{ path('app_logout') }}">{{ 'Navigation.logout'|trans }}</a></li>
+                </ul>
+            </div>
+
         </div>
 
-        <div class="navigation">
-            <span>{{ "General.navigation"|trans|upper }}</span>
-            <ul>
-                <li><a href="{{ path('administration') }}">{{ 'Navigation.dashboard'|trans }}</a></li>
-                <li><a href="{{ path('app_logout') }}">{{'Navigation.logout'|trans}}</a></li>
-            </ul>
+        <div class="right">
+            {% block right %}
+            {% endblock %}
         </div>
 
     </div>
-
-    <div class="right">
-        {% block right %}
-        {% endblock %}
-    </div>
-
-</div>
 {% endblock %}

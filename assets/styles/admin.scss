@@ -1,6 +1,29 @@
 @import "main";
 @import "components/dashboard_statistics";
-
+body {
+  &>.header {
+    width: calc(100% - 40px);
+    display: flex;
+    flex-direction: row;
+    background: $primary;
+    padding: 20px;
+    &>.left {
+      width: 20%;
+      font-family: "RobotoLight", sans-serif;
+      text-transform: uppercase;
+      font-size: 20px;
+      &>svg {
+        color: $font-special;
+      }
+    }
+    &>.right {
+      width: 80%;
+      display: flex;
+      justify-content: flex-end;
+      font-family: "RobotoRegular",sans-serif;
+    }
+  }
+}
 .body {
   width: 100%;
   flex: 1;
@@ -8,12 +31,11 @@
 
   & > .left {
     display: flex;
-    width: calc(15% - 20px);
-    margin: 10px 10px 10px 0;
-    border-radius: 0 15px 15px 0;
+    width: calc(15% - 30px);
     flex: 1;
-    //background: #203A43;
-    background: linear-gradient($primary, $secondary);
+    margin: 15px;
+    border-radius: 15px;
+    background: $primary;
     flex-direction: column;
 
     & > .header {
@@ -24,7 +46,7 @@
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       height: 200px;
       width: 100%;
-      color: white;
+      color: $font-primary;
 
       & > span {
         margin: 10px 0;
@@ -35,10 +57,12 @@
         width: 64px;
         height: 64px;
         border-radius: 30px;
-        background: #AAAAAA;
+        background: $font-special;
         display: flex;
         align-items: center;
         justify-content: center;
+        color: white;
+        font-family: "RobotoRegular", sans-serif;
       }
     }
 
@@ -50,7 +74,7 @@
       flex-direction: column;
 
       & > span {
-        color: white;
+        color: $font-primary;
         font-weight: 100;
         font-family: "RobotoLight", sans-serif;
         margin: 3px;
@@ -80,9 +104,8 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            color: white;
+            color: $font-primary;
             font-family: "RobotoRegular", sans-serif;
-
           }
 
           &:hover {
@@ -95,18 +118,17 @@
   }
 
   & > .right {
-    width: calc(85% - 20px);
+    width: calc(85% - 30px);
     background: $container;
-    margin: 10px;
+    margin: 15px;
     border-radius: 15px;
     &>header{
-      background: linear-gradient($primary, $secondary);
+      background: $primary;
       border-radius: 15px 15px 0 0;
-      padding: 5px;
+      padding: 15px;
       &>h1 {
-        text-align: center;
-        color: white;
-        font-family: "RobotoRegular", sans-serif;
+        color: $font-primary;
+        font-family: "RobotoLight", sans-serif;
       }
     }
   }
