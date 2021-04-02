@@ -1,7 +1,7 @@
 @import "main";
 
 #loginForm {
-  background: $special;
+  background: white;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -10,24 +10,28 @@
   width: 350px;
   color: white;
   &>h1 {
-    color: white;
+    color: $font-special;
     font-family: "RobotoRegular", sans-serif;
     text-align: center;
   }
   &>input {
     margin-bottom: 30px;
   }
-
+  &>label {
+    color: $font-primary;
+  }
   &>button {
     color: white;
     background: darken($special,10%);
-    padding: 5px;
-    border: none;
+    padding: 10px;
     cursor: pointer;
     border-radius: 3px;
     transition: background 500ms ease-in-out;
+    border: 1px solid darken($special,10%);
+    cursor: pointer;
     &:hover {
-      background: lighten($special, 5%)
+      background: white;
+      color: $font-special;
     }
   }
 }
