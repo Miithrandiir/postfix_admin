@@ -74,6 +74,11 @@ class Domain
      */
     private $mailboxes;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="domains")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->mailboxes = new ArrayCollection();
@@ -230,6 +235,18 @@ class Domain
                 $mailbox->setDomain(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

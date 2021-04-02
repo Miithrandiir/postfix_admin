@@ -19,7 +19,7 @@ class Mailbox
 
     /**
      * @ORM\ManyToOne(targetEntity=Domain::class, inversedBy="mailboxes")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $domain;
 
@@ -35,6 +35,7 @@ class Mailbox
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="mailboxes")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $user;
 
@@ -104,14 +105,14 @@ class Mailbox
         return $this;
     }
 
-    public function getUser�(): ?User
+    public function getUser(): ?User
     {
-        return $this->user�;
+        return $this->user;
     }
 
-    public function setUser�(?User $user�): self
+    public function setUser(?User $user): self
     {
-        $this->user� = $user�;
+        $this->user = $user;
 
         return $this;
     }

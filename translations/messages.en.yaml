@@ -18,5 +18,7 @@ Navigation:
   users: Users
 Page:
   UsersEdition:
+    nb_domains: Numbers of domains
+    nb_mailboxes: Numbers of mailboxes
     users_edit: Users edition
 

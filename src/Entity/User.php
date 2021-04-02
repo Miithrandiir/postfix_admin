@@ -38,13 +38,19 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity=Mailbox::class, mappedBy="userÃ")
+     * @ORM\OneToMany(targetEntity=Mailbox::class, mappedBy="user")
      */
     private $mailboxes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Domain::class, mappedBy="user")
+     */
+    private $domains;
 
     public function __construct()
     {
         $this->mailboxes = new ArrayCollection();
+        $this->domains = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -135,7 +141,7 @@ class User implements UserInterface
     {
         if (!$this->mailboxes->contains($mailbox)) {
             $this->mailboxes[] = $mailbox;
-            $mailbox->setUserÃ($this);
+            $mailbox->setUser($this);
         }
 
         return $this;
@@ -145,8 +151,38 @@ class User implements UserInterface
     {
         if ($this->mailboxes->removeElement($mailbox)) {
             // set the owning side to null (unless already changed)
-            if ($mailbox->getUserÃ() === $this) {
-                $mailbox->setUserÃ(null);
+            if ($mailbox->getUser() === $this) {
+                $mailbox->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Domain[]
+     */
+    public function getDomains(): Collection
+    {
+        return $this->domains;
+    }
+
+    public function addDomain(Domain $domain): self
+    {
+        if (!$this->domains->contains($domain)) {
+            $this->domains[] = $domain;
+            $domain->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDomain(Domain $domain): self
+    {
+        if ($this->domains->removeElement($domain)) {
+            // set the owning side to null (unless already changed)
+            if ($domain->getUser() === $this) {
+                $domain->setUser(null);
             }
         }
 

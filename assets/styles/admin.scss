@@ -1,5 +1,6 @@
 @import "main";
 @import "components/dashboard_statistics";
+@import "components/table.scss";
 body {
   &>.header {
     width: calc(100% - 40px);
@@ -21,6 +22,8 @@ body {
       display: flex;
       justify-content: flex-end;
       font-family: "RobotoRegular",sans-serif;
+      color: $special;
+      cursor:pointer;
     }
   }
 }
