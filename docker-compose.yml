@@ -17,3 +17,7 @@ services:
       - ./public:/var/www/html/public
       - ./tools/httpd/localhost.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
       - ./tools/httpd/httpd.conf:/usr/local/apache2/conf/httpd.conf
+networks:
+  default:
+    external:
+      name: postfix_admin_default
