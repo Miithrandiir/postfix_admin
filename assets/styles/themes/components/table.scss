@@ -1,0 +1,27 @@
+table.table {
+  border-spacing: 0;
+  width: 100%;
+  &>thead {
+    &>tr {
+      &>td,&>th {
+        color: var(--font-color);
+        font-family: "Raleway", sans-serif;
+        text-align: center;
+        background: var(--transparent);
+        padding: 10px;
+        font-weight: 900;
+      }
+    }
+  }
+  &>tbody {
+    &>tr {
+      &>td,&>th {
+        color: var(--font-color);
+        text-align: center;
+        padding: 5px;
+        font-family: "Roboto Thin", sans-serif;
+        font-weight: 200;
+      }
+    }
+  }
+}

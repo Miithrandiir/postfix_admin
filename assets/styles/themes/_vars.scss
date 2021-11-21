@@ -1,0 +1,69 @@
+$theme: (
+        dark: (
+                background: #262626,
+                background-overlay: #353535,
+                font-color: #F7F7F7,
+                transparent: rgba(255,255,255,0.10)
+        ),
+        light: (
+                background: #FFFFFF,
+                background-overlay: #F7F7F7,
+                font-color: #353535,
+                transparent: rgba(0,0,0,0.10)
+        ),
+        primary: (
+                base: #4D69F0,
+                light: lighten(#4D69F0, 15%),
+                dark: darken(#4D69F0, 15%),
+                transparent: transparentize(#4D69F0, 0.5),
+                font: white
+        ),
+        warning: (
+                base: #FE8C33,
+                light: lighten(#FE8C33, 15%),
+                dark: darken(#FE8C33, 15%),
+                transparent: transparentize(#FE8C33, 0.5),
+                font: white
+        ),
+        danger: (
+                base: #F06B6E,
+                light: lighten(#F06B6E, 15%),
+                dark: darken(#F06B6E, 15%),
+                transparent: transparentize(#F06B6E, 0.5),
+                font: white
+        ),
+        success: (
+                base: #4FDEB5,
+                light: lighten(#4FDEB5, 15%),
+                dark: darken(#4FDEB5, 15%),
+                transparent: transparentize(#4FDEB5, 0.5),
+                font: white
+        )
+);
+
+:root, .theme-light {
+
+  @each $key, $value in $theme {
+    @if type-of($value) == "map" {
+      @if $key == "light" {
+        @each $subKey, $subvalue in $value {
+          --#{$subKey} : #{$subvalue};
+        }
+      } @else if($key != "dark") {
+        @each $subKey, $subvalue in $value {
+          --#{$key}-#{$subKey} : #{$subvalue};
+        }
+      }
+    }
+  }
+}
+
+.theme-dark {
+  @each $key, $value in $theme {
+    @if type-of($value) == "map" and $key == "dark" {
+      @each $subKey, $subvalue in $value {
+        --#{$subKey} : #{$subvalue};
+      }
+    }
+  }
+}

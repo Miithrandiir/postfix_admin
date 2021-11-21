@@ -1,0 +1,17 @@
+div.box {
+  background: var(--background-overlay);
+  margin: 10px;
+  padding: 10px 10px;
+  border-radius: 5px;
+
+  & > .box-header {
+    color: var(--font-color);
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  & > .box-body {
+    padding: 5px;
+  }
+}
