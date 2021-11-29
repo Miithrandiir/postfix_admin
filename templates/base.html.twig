@@ -1,19 +1,46 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
+    {% block javascripts %}
+        {# {{ encore_entry_script_tags('app') }} #}
+    {% endblock %}
+</head>
+<body class="app">
+<div class="nav">
+
+    <div class="header">
+        <div class="gravatar">
+            <img src="https://fr.gravatar.com/avatar/{{ app.user.username|md5 }}" alt=""/>
+        </div>
+        <h2>{{ app.user.username }}</h2>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="{{ path('home') }}"><span class="material-icons">dashboard</span>Home</a></li>
+            <li><a href="{{ path('home') }}"><span class="material-icons">domain</span>Domains</a></li>
+            <li><a href="{{ path('home') }}"><span class="material-icons">mail</span>Mailbox</a></li>
+            <li><a href="{{ path('home') }}"><span class="material-icons">alternate_email</span>Alias</a></li>
+            <li><a href="{{ path('home') }}"><span class="material-icons">admin_panel_settings</span>Administration</a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+
+<main>
+    <div>
         {% block body %}{% endblock %}
-    </body>
+    </div>
+</main>
+
+</body>
 </html>

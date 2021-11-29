@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[Entity()]
 class User implements UserInterface
@@ -15,7 +16,7 @@ class User implements UserInterface
     #[Id, GeneratedValue, Column(type: Types::BIGINT)]
     public int $id;
 
-    #[Column(type: Types::STRING)]
+    #[Column(type: Types::STRING), Assert\Email]
     public string $username;
 
     #[Column(type: Types::STRING)]
@@ -31,7 +32,7 @@ class User implements UserInterface
 
     public function getUsername(): ?string
     {
-        return $this->username;
+        return (string)$this->username;
     }
 
     public function setUsername(string $username): self
@@ -55,6 +56,8 @@ class User implements UserInterface
 
     public function getRoles(): ?array
     {
+        if(sizeof($this->roles) == 0)
+            $this->roles[0] = 'ROLE_USER';
         return $this->roles;
     }
 
@@ -75,8 +78,8 @@ class User implements UserInterface
         // TODO: Implement eraseCredentials() method.
     }
 
-    #[Pure] public function getUserIdentifier() : string
+    public function getUserIdentifier() : string
     {
-        return $this->getUsername();
+        return $this->username;
     }
 }

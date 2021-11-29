@@ -1,0 +1,33 @@
+form.form {
+  display: flex;
+  flex-direction: column;
+
+  & > .input-group {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+
+    & > label {
+      color: var(--font-color);
+      font-family: 'Raleway', sans-serif;
+    }
+  }
+}
+
+input.input {
+  border-radius: 5px;
+  padding: 10px 5px;
+  border: none;
+  background: var(--background);
+  color: var(--font-color);
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+@each $item in ["success", "warning", "danger"] {
+  input.input-#{$item} {
+    box-shadow: inset 0px -2px var(--#{$item}-base);
+  }
+}

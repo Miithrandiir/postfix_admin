@@ -15,17 +15,19 @@ button.button.button-disable {
   button.button.button-outline-#{$value} {
     background: none;
     border: 2px solid var(--#{$value}-base);
-    color: var(--#{$value}-font);
+    color: var(--font-color);
     transition: background 500ms ease-in-out;
     &:hover {
       background: var(--#{$value}-base);
+      color: var(--#{$value}-font);
     }
   }
   button.button.button-#{$value} {
     background: var(--#{$value}-base);
     color: var(--#{$value}-font);
-    transition: background 500ms ease-in-out;
+    transition: background 500ms ease-in-out, color 500ms ease-in-out;
     &:hover {
+      color: var(--font-color);
       background: none;
       box-shadow:inset 0 0 0 1px var(--#{$value}-base);
     }

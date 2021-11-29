@@ -1,0 +1,17 @@
+.alert {
+  color: var(--font-color);
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.alert-danger {
+  background: var(--danger-base);
+}
+
+.alert-success {
+  background: var(--success-base);
+}
+
+.alert-warning {
+  background: var(--warning-base);
+}

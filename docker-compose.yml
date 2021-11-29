@@ -17,6 +17,12 @@ services:
       - ./public:/var/www/html/public
       - ./tools/httpd/localhost.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
       - ./tools/httpd/httpd.conf:/usr/local/apache2/conf/httpd.conf
+  yarn:
+    image: node
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    command: /bin/sh -c "npm install && yarn run watch"
 networks:
   default:
     external:

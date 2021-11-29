@@ -11,20 +11,28 @@ div.login {
   border-radius: 10px 0 0 10px;
   &>.img {
     height: 100%;
+    display: flex;
+    flex: 1 0;
     &>img {
       height: 100%;
     }
   }
 
-  &>form {
+
+
+  &>.body {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 500px;
     &>h1 {
-      color: var(--font-colr);
-      margin: 20px auto;
+      text-align: center;
+      margin: 10px auto;
     }
-
+    &>form {
+      width: 75%;
+      margin: 0 auto;
+    }
   }
 
 }

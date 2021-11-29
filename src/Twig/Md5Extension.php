@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Twig;
+
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+
+class Md5Extension extends AbstractExtension
+{
+    public function getFilters()
+    {
+        return [
+          new TwigFilter('md5', [$this, 'toMd5'])
+        ];
+    }
+
+    public function toMd5(string $myStr) : string
+    {
+        return md5($myStr);
+    }
+}

@@ -1,5 +1,6 @@
 @import "vars";
 //Fonts
+@import "fonts/material-icon";
 @import "fonts/opensans";
 @import "fonts/raleway";
 @import "fonts/roboto";
@@ -9,17 +10,93 @@
   margin: 0;
   box-sizing: border-box;
 }
-html,body {
+
+html, body {
   width: 100%;
   height: 100%;
 }
+
 body {
   background: var(--background);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+
+  & > .nav {
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 0;
+
+    & > .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      & > .gravatar {
+        & > img {
+          border-radius: 100px;
+        }
+      }
+
+      & > h2 {
+        font-family: Raleway, sans-serif;
+        font-size: 0.75em;
+        text-align: center;
+      }
+    }
+
+    & > nav {
+      padding: 30px 0 0 0;
+
+      & > ul {
+        list-style: none;
+
+        & > li {
+
+          margin: 25px 0;
+          & > a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            & > span.material-icons {
+              font-size: 2.25em;
+              color: var(--font-color);
+            }
+            text-decoration: none;
+            font-family: Raleway, sans-serif;
+            font-weight: 100;
+            color: var(--font-color);
+          }
+        }
+      }
+    }
+  }
+
+  &>main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    &>div {
+      border-radius: 10px;
+      background: var(--background);
+      height: 95%;
+      width: 98%;
+    }
+  }
 
 }
 
+body.app {
+  background: var(--background-overlay);
+}
+
+@import "./components/title";
 @import "./components/box";
 @import "./components/table";
 @import "./components/button";
+@import "./components/form";
+@import "./components/alert";
