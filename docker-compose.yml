@@ -22,7 +22,7 @@ services:
     working_dir: /var/www
     volumes:
       - .:/var/www
-    command: /bin/sh -c "npm install && yarn run watch"
+    command: /bin/sh -c "npm install && yarn encore dev-server"
 networks:
   default:
     external:
