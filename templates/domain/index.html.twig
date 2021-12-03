@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('domain') }}
+{% endblock %}
+
+{% block title %}Hello DomainController!{% endblock %}
+
+{% block body %}
+    <div class="domains">
+        <div class="header">
+            My domains
+        </div>
+        <div class="body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Domain</th>
+                    <th># Mailboxes</th>
+                    <th># Aliases</th>
+                    <th>Backup</th>
+                    <th>Enable</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in domains %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.domain }}</td>
+                        <td>
+                            <span class="span span-info">
+                                {{ item.mailboxes.count }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="span span-info">
+                                {{ item.aliases.count }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if item.backupMx %}
+                                <span class="span span-success">
+                                    <span class="material-icons">check</span>
+                                </span>
+                            {% else %}
+                                <span class="span span-danger">
+                                    <span class="material-icons">close</span>
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if item.isActive %}
+                                <span class="span span-success">
+                                    <span class="material-icons">check</span>
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
