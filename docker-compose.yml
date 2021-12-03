@@ -6,6 +6,7 @@ services:
       context: ./tools/images/php
     volumes:
       - .:/var/www/html
+    user: ${CURRENT_UID}
 
   apache:
     image: httpd:alpine
@@ -23,6 +24,7 @@ services:
     volumes:
       - .:/var/www
     command: /bin/sh -c "npm install && yarn encore dev-server"
+    user: ${CURRENT_UID}
 networks:
   default:
     external:
