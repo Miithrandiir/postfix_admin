@@ -1,31 +1,49 @@
 <?php
 
 namespace App\Entity;
+use App\Entity\Postfix\Domain;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\Id;
-use JetBrains\PhpStorm\Pure;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[Entity()]
+#[ORM\Entity]
 class User implements UserInterface
 {
-    #[Id, GeneratedValue, Column(type: Types::BIGINT)]
-    public int $id;
+    #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: Types::BIGINT)]
+    private int $id;
 
-    #[Column(type: Types::STRING), Assert\Email]
-    public string $username;
+    #[ORM\Column(type: Types::STRING), Assert\Email]
+    private string $username;
 
-    #[Column(type: Types::STRING)]
-    public string $password;
+    #[ORM\Column(type: Types::STRING)]
+    private string $password;
 
-    #[Column(type: Types::JSON)]
-    public array $roles = [];
+    #[ORM\Column(type: Types::JSON)]
+    private array $roles = [];
 
-    public function getId(): ?string
+    #[ORM\OneToMany(targetEntity: Domain::class, mappedBy: 'user')]
+    private Collection $domains;
+
+    /**
+     * @return Collection
+     */
+    public function getDomains(): Collection
+    {
+        return $this->domains;
+    }
+
+    /**
+     * @param Collection $domains
+     */
+    public function setDomains(Collection $domains): void
+    {
+        $this->domains = $domains;
+    }
+
+
+    public function getId(): int
     {
         return $this->id;
     }
