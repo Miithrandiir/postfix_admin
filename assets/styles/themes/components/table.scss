@@ -1,9 +1,10 @@
 table.table {
   border-spacing: 0;
   width: 100%;
-  &>thead {
-    &>tr {
-      &>td,&>th {
+
+  & > thead {
+    & > tr {
+      & > td, & > th {
         color: var(--font-color);
         font-family: "Raleway", sans-serif;
         text-align: center;
@@ -13,9 +14,10 @@ table.table {
       }
     }
   }
-  &>tbody {
-    &>tr {
-      &>td,&>th {
+
+  & > tbody {
+    & > tr {
+      & > td, & > th {
         color: var(--font-color);
         text-align: center;
         padding: 5px;
@@ -24,4 +26,11 @@ table.table {
       }
     }
   }
+}
+
+form.table-search {
+  width: 25%;
+  float: right;
+  display: flex;
+  align-items: flex-end;
 }

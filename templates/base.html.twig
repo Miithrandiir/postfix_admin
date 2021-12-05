@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Postfix Admin Panel - {% endblock %}</title>
-    {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-    {# DEFAULT #}
+
     {{ encore_entry_link_tags('app') }}
     {{ encore_entry_link_tags('admin_panel') }}
     {% block stylesheets %}
@@ -33,8 +31,8 @@
         <ul>
             <li><a href="{{ path('home') }}"><span class="material-icons">dashboard</span>Home</a></li>
             <li><a href="{{ path('domain') }}"><span class="material-icons">domain</span>Domains</a></li>
-            <li><a href="{{ path('home') }}"><span class="material-icons">mail</span>Mailbox</a></li>
-            <li><a href="{{ path('home') }}"><span class="material-icons">alternate_email</span>Alias</a></li>
+            <li><a href="{{ path('mailbox') }}"><span class="material-icons">mail</span>Mailbox</a></li>
+            <li><a href="{{ path('alias') }}"><span class="material-icons">alternate_email</span>Alias</a></li>
             <li><a href="{{ path('home') }}"><span class="material-icons">admin_panel_settings</span>Administration</a>
             </li>
         </ul>

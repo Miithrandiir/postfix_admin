@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MailboxController!{% endblock %}
+
+{% block body %}
+    <div id="mailbox" class="box">
+        <div class="box-header">
+            My Mailboxes
+        </div>
+        <div class="box-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Mail</th>
+                    <th>Name</th>
+                    <th>Firstname</th>
+                    <th>Directory</th>
+                    <th>Quota</th>
+                    <th>Creation Date</th>
+                    <th>Last Edition</th>
+                    <th>Enable</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for domain in domains %}
+                    {% for mailbox in domain.Mailboxes %}
+                        <tr>
+                            <td>{{ mailbox.id }}</td>
+                            <td>
+                                <span class="badge badge-warning">
+                                    {{ mailbox.username }}@{{ domain.domain }}
+                                </span>
+                            </td>
+                            <td>{{ mailbox.name }}</td>
+                            <td>
+                                {{ mailbox.firstname|default('UNKNOW') }}
+                            </td>
+                            <td>{{ mailbox.maildir }}</td>
+                            <td>
+                                <span class="badge badge-info">
+                                    {{ mailbox.quota }}
+                                </span>
+                            </td>
+                            <td>{{ mailbox.dateCreated|date }}</td>
+                            <td>{{ mailbox.dateModified|date }}</td>
+                            <td>
+                                {% if mailbox.isActive %}
+                                    <span class="badge badge-success">
+                                        <span class="material-icons">check</span>
+                                    </span>
+                                {% else %}
+                                    <span class="badge badge-danger">
+                                        <span class="material-icons">close</span>
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Aliases{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('table_search') }}
+
+{% endblock %}
+
+{% block body %}
+    <div id="mailbox_aliases" class="box" data-name="aliases_mailboxes">
+        <div class="box-header">
+            My Mailbox Aliases
+        </div>
+        <div class="box-body" id="mailbox_aliases_table">
+            <form class="form table-search">
+                <div class="input-group">
+                    <input type="text" class="input" id="mailbox_aliases_search" aria-label="search"
+                           placeholder="search"/>
+                </div>
+            </form>
+            <table class="table table-search">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Mailbox</th>
+                    <th>Goto</th>
+                    <th>Creation date</th>
+                    <th>Last edit</th>
+                    <th>Enable</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for domain in domains %}
+                    {% for alias in domain.aliases %}
+                        <tr>
+                            <td>{{ alias.id }}</td>
+                            <td>
+                                <span class="badge badge-info">
+                                    {{ alias.address }}@{{ domain.domain }}
+                                </span>
+                            </td>
+                            <td>
+                                <ul>
+                                    {% for item in alias.goto|split(',') %}
+                                        <li><span class="badge badge-warning">{{ item }}</span></li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                {{ alias.dateCreated|date }}
+                            </td>
+                            <td>
+                                {{ alias.dateModified|date }}
+                            </td>
+                            <td>
+                                {% if alias.isActive %}
+                                    <span class="badge badge-success">
+                                        <span class="material-icons">check</span>
+                                    </span>
+                                {% else %}
+                                    <span class="badge badge-danger">
+                                        <span class="material-icons">close</span>
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="pagination">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="domain_aliases" class="box">
+        <div class="box-header">
+            My Domain Aliases
+        </div>
+        <div class="box-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Domain</th>
+                    <th>Goto</th>
+                    <th>Creation date</th>
+                    <th>Last edit</th>
+                    <th>Enable</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+{% endblock %}

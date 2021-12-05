@@ -24,8 +24,8 @@ class Mailbox
     #[ORM\Column(type:Types::STRING)]
     private string $name;
 
-    #[ORM\Column(type:Types::STRING)]
-    private string $firstname;
+    #[ORM\Column(type:Types::STRING, nullable: true)]
+    private ?string $firstname;
 
     #[ORM\Column(name: "maildir",type: Types::STRING)]
     private string $mail_dir;
@@ -115,9 +115,9 @@ class Mailbox
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getFirstname(): string
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }

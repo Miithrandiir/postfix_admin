@@ -24,6 +24,7 @@ Encore
     .addEntry('login', './assets/login.js')
     .addEntry('admin_panel', './assets/admin_panel.js')
     .addEntry('domain', './assets/domain.js')
+    .addEntry('table_search', './assets/table_search.ts')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     //.enableStimulusBridge('./assets/controllers.json')
@@ -62,10 +63,11 @@ Encore
     .enableSassLoader()
 
     // uncomment if you use TypeScript
-    //.enableTypeScriptLoader()
+    .enableTypeScriptLoader()
 
     // uncomment if you use React
     //.enableReactPreset()
+    .enableVueLoader()
 
     // uncomment to get integrity="..." attributes on your script & link tags
     // requires WebpackEncoreBundle 1.4 or higher
