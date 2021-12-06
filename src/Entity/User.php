@@ -5,11 +5,12 @@ use App\Entity\Postfix\Domain;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: Types::BIGINT)]
     private int $id;
@@ -86,8 +87,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getSalt()
+    /**
+     * @inheritDoc
+     */
+    public function getSalt() : ?string
     {
+        return null;
         // TODO: Implement getSalt() method.
     }
 

@@ -184,12 +184,12 @@ class Domain
 
     public function getDateCreate(): ?\DateTimeInterface
     {
-        return $this->date_create;
+        return $this->date_created;
     }
 
     public function setDateCreate(\DateTimeInterface $date_create): self
     {
-        $this->date_create = $date_create;
+        $this->date_created = $date_create;
 
         return $this;
     }

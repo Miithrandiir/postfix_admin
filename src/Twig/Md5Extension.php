@@ -7,7 +7,7 @@ use Twig\TwigFilter;
 
 class Md5Extension extends AbstractExtension
 {
-    public function getFilters()
+    public function getFilters() : array
     {
         return [
           new TwigFilter('md5', [$this, 'toMd5'])
