@@ -1,4 +1,4 @@
-FROM php:8.0-fpm-buster
+FROM php:8.1-fpm-buster
 RUN apt update -y && apt upgrade -y
 RUN apt-get clean && apt-get update && apt-get install --fix-missing wget apt-transport-https lsb-release ca-certificates gnupg2 -y
 RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
@@ -38,7 +38,7 @@ RUN docker-php-ext-install intl
 RUN docker-php-ext-install xml
 RUN docker-php-ext-install ctype
 RUN docker-php-ext-install mbstring
-RUN docker-php-ext-install readline
+#RUN docker-php-ext-install readline
 RUN docker-php-ext-install simplexml
 RUN docker-php-ext-install phar
 RUN docker-php-ext-install curl
