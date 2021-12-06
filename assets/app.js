@@ -1,5 +1,9 @@
 import "./styles/themes/_vars.scss"
 import "./styles/app.scss"
+import Table from "./table_search";
+
+
+window.Table = Table;
 
 window.addEventListener("load", () => {
     // Check to see if Media-Queries are supported

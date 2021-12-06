@@ -4,7 +4,14 @@
 
 {% block javascripts %}
     {{ encore_entry_script_tags('table_search') }}
-
+    <script>
+        window.addEventListener("load", () => {
+            let mailbox_aliases_table = document.querySelector("#mailbox_aliases_table");
+            let mailbox_aliases_table_search = document.querySelector("#mailbox_aliases_search");
+            let res = new Table(mailbox_aliases_table, mailbox_aliases_table_search);
+            document.querySelector("#mailbox_aliases_search_form").addEventListener("submit", (e) => {e.preventDefault(); return false;})
+        });
+    </script>
 {% endblock %}
 
 {% block body %}
@@ -12,14 +19,14 @@
         <div class="box-header">
             My Mailbox Aliases
         </div>
-        <div class="box-body" id="mailbox_aliases_table">
-            <form class="form table-search">
+        <div class="box-body">
+            <form class="form table-search" id="mailbox_aliases_search_form">
                 <div class="input-group">
                     <input type="text" class="input" id="mailbox_aliases_search" aria-label="search"
                            placeholder="search"/>
                 </div>
             </form>
-            <table class="table table-search">
+            <table class="table table-search" id="mailbox_aliases_table">
                 <thead>
                 <tr>
                     <th>#</th>
