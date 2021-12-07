@@ -35,7 +35,6 @@ export default class Table {
     public render() {
         let localData: Array<Array<string>> = this.Data;
 
-        console.log(this.search.textContent)
         if (this.search != null) {
             localData = new Array<Array<string>>();
             this.Data.forEach((elt: Array<string>) => {
@@ -65,6 +64,15 @@ export default class Table {
             html.append(tmp);
         });
 
+        if (localData.length === 0) {
+            let tmp: Element = document.createElement("tr");
+            let td: HTMLTableCellElement = document.createElement("td");
+            td.textContent = "No data available.";
+            td.colSpan = this.Columns.length;
+            tmp.appendChild(td);
+            html.append(tmp);
+        }
+
         this.table.removeChild(this.table.querySelector("tbody"));
         this.table.appendChild(html);
 
@@ -72,9 +80,9 @@ export default class Table {
     }
 
     private addEventHandler() {
-        this.search.addEventListener("change", () => {
+        this.search.onkeyup = () => {
             this.render()
-        });
+        }
     }
 
 }

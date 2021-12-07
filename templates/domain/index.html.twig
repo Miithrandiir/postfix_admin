@@ -5,7 +5,23 @@
 
 {% endblock %}
 
-{% block title %}Hello DomainController!{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('table_search') }}
+    <script>
+        window.onload = () => {
+            let domains_table = document.querySelector("#domains_table");
+            let domains_table_search = document.querySelector("#domains_search");
+            let res = new Table(domains_table, domains_table_search);
+            document.querySelector("#domains_search_form").addEventListener("submit", (e) => {
+                e.preventDefault();
+                return false;
+            })
+        };
+    </script>
+
+{% endblock %}
+
+{% block title %}My Domains{% endblock %}
 
 {% block body %}
     <div class="domains box">
@@ -13,7 +29,13 @@
             My domains
         </div>
         <div class="box-body">
-            <table class="table">
+            <form class="form table-search" id="domains_search_form">
+                <div class="input-group">
+                    <input type="text" class="input" id="domains_search" aria-label="search"
+                           placeholder="search"/>
+                </div>
+            </form>
+            <table class="table" id="domains_table">
                 <thead>
                 <tr>
                     <th>#</th>

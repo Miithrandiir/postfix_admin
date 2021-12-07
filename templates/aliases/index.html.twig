@@ -32,8 +32,6 @@
                     <th>#</th>
                     <th>Mailbox</th>
                     <th>Goto</th>
-                    <th>Creation date</th>
-                    <th>Last edit</th>
                     <th>Enable</th>
                 </tr>
                 </thead>
@@ -53,12 +51,6 @@
                                         <li><span class="badge badge-warning">{{ item }}</span></li>
                                     {% endfor %}
                                 </ul>
-                            </td>
-                            <td>
-                                {{ alias.dateCreated|date }}
-                            </td>
-                            <td>
-                                {{ alias.dateModified|date }}
                             </td>
                             <td>
                                 {% if alias.isActive %}

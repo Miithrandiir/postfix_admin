@@ -15,10 +15,7 @@
                     <th>Mail</th>
                     <th>Name</th>
                     <th>Firstname</th>
-                    <th>Directory</th>
                     <th>Quota</th>
-                    <th>Creation Date</th>
-                    <th>Last Edition</th>
                     <th>Enable</th>
                 </tr>
                 </thead>
@@ -32,18 +29,15 @@
                                     {{ mailbox.username }}@{{ domain.domain }}
                                 </span>
                             </td>
-                            <td>{{ mailbox.name }}</td>
+                            <td>{{ mailbox.name|default('UNKNOW') }}</td>
                             <td>
                                 {{ mailbox.firstname|default('UNKNOW') }}
                             </td>
-                            <td>{{ mailbox.maildir }}</td>
                             <td>
                                 <span class="badge badge-info">
                                     {{ mailbox.quota }}
                                 </span>
                             </td>
-                            <td>{{ mailbox.dateCreated|date }}</td>
-                            <td>{{ mailbox.dateModified|date }}</td>
                             <td>
                                 {% if mailbox.isActive %}
                                     <span class="badge badge-success">
