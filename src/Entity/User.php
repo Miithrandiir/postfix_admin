@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
+
 use App\Entity\Postfix\Domain;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -24,25 +28,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::JSON)]
     private array $roles = [];
 
-    #[ORM\OneToMany(targetEntity: Domain::class, mappedBy: 'user')]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Domain::class)]
     private Collection $domains;
 
-    /**
-     * @return Collection
-     */
+    public function __construct()
+    {
+        $this->domains = new ArrayCollection();
+    }
+
     public function getDomains(): Collection
     {
         return $this->domains;
     }
 
-    /**
-     * @param Collection $domains
-     */
     public function setDomains(Collection $domains): void
     {
         $this->domains = $domains;
     }
-
 
     public function getId(): int
     {
@@ -51,7 +53,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUsername(): ?string
     {
-        return (string)$this->username;
+        return (string) $this->username;
     }
 
     public function setUsername(string $username): self
@@ -75,8 +77,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): ?array
     {
-        if(sizeof($this->roles) == 0)
+        if (\count($this->roles) === 0) {
             $this->roles[0] = 'ROLE_USER';
+        }
+
         return $this->roles;
     }
 
@@ -88,20 +92,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    public function getSalt() : ?string
+    public function getSalt(): ?string
     {
         return null;
         // TODO: Implement getSalt() method.
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // TODO: Implement eraseCredentials() method.
     }
 
-    public function getUserIdentifier() : string
+    public function getUserIdentifier(): string
     {
         return $this->username;
     }

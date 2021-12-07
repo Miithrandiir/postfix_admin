@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\Postfix;
 
 use App\Entity\User;
@@ -7,9 +9,9 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity, ORM\Table("postfix_domain")]
+#[ORM\Entity, ORM\Table('postfix_domain')]
 class Domain
 {
     #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: Types::BIGINT)]
@@ -33,7 +35,7 @@ class Domain
     #[ORM\Column(type: Types::INTEGER)]
     private int $quota;
 
-    #[ORM\Column(name: 'backupmx',type: Types::BOOLEAN)]
+    #[ORM\Column(name: 'backupmx', type: Types::BOOLEAN)]
     private bool $backup_mx;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -45,15 +47,14 @@ class Domain
     #[ORM\Column(name: 'active', type: Types::BOOLEAN)]
     private bool $is_active;
 
-    #[ORM\OneToMany(mappedBy: "domain", targetEntity: Mailbox::class)]
+    #[ORM\OneToMany(mappedBy: 'domain', targetEntity: Mailbox::class)]
     private Collection $mailboxes;
 
-    #[ORM\OneToMany(mappedBy: "domain", targetEntity: Alias::class)]
+    #[ORM\OneToMany(mappedBy: 'domain', targetEntity: Alias::class)]
     private Collection $aliases;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'domains')]
     private User $user;
-
 
     public function __construct()
     {
@@ -61,33 +62,21 @@ class Domain
         $this->aliases = new ArrayCollection();
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function getDateCreated(): DateTimeInterface
     {
         return $this->date_created;
     }
 
-    /**
-     * @param DateTimeInterface $date_created
-     */
     public function setDateCreated(DateTimeInterface $date_created): void
     {
         $this->date_created = $date_created;
     }
 
-    /**
-     * @return Collection
-     */
     public function getMailboxes(): Collection
     {
         return $this->mailboxes;
     }
 
-    /**
-     * @param Collection $mailboxes
-     */
     public function setMailboxes(Collection $mailboxes): void
     {
         $this->mailboxes = $mailboxes;
@@ -182,24 +171,24 @@ class Domain
         return $this;
     }
 
-    public function getDateCreate(): ?\DateTimeInterface
+    public function getDateCreate(): ?DateTimeInterface
     {
         return $this->date_created;
     }
 
-    public function setDateCreate(\DateTimeInterface $date_create): self
+    public function setDateCreate(DateTimeInterface $date_create): self
     {
         $this->date_created = $date_create;
 
         return $this;
     }
 
-    public function getDateModified(): ?\DateTimeInterface
+    public function getDateModified(): ?DateTimeInterface
     {
         return $this->date_modified;
     }
 
-    public function setDateModified(\DateTimeInterface $date_modified): self
+    public function setDateModified(DateTimeInterface $date_modified): self
     {
         $this->date_modified = $date_modified;
 
@@ -218,33 +207,21 @@ class Domain
         return $this;
     }
 
-    /**
-     * @return Collection
-     */
     public function getAliases(): Collection
     {
         return $this->aliases;
     }
 
-    /**
-     * @param Collection $aliases
-     */
     public function setAliases(Collection $aliases): void
     {
         $this->aliases = $aliases;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     */
     public function setUser(User $user): void
     {
         $this->user = $user;
