@@ -17,12 +17,20 @@ table.table {
 
   & > tbody {
     & > tr {
+      &:nth-child(even) {
+        background: var(--transparent);
+      }
+
       & > td, & > th {
         color: var(--font-color);
         text-align: center;
         padding: 5px;
         font-family: "Roboto Thin", sans-serif;
         font-weight: 200;
+
+        & > ul {
+          list-style: none;
+        }
       }
     }
   }
