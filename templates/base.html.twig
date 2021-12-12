@@ -33,8 +33,11 @@
             <li><a href="{{ path('domain') }}"><span class="material-icons">domain</span>Domains</a></li>
             <li><a href="{{ path('mailbox') }}"><span class="material-icons">mail</span>Mailbox</a></li>
             <li><a href="{{ path('alias') }}"><span class="material-icons">alternate_email</span>Alias</a></li>
-            <li><a href="{{ path('home') }}"><span class="material-icons">admin_panel_settings</span>Administration</a>
-            </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li><a href="{{ path('home') }}"><span class="material-icons">admin_panel_settings</span>Administration</a>
+                </li>
+            {% endif %}
+            <li><a href="{{ path('app_logout') }}"><span class="material-icons">logout</span>Logout</a></li>
         </ul>
     </nav>
 
