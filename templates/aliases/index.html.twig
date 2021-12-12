@@ -8,8 +8,11 @@
         window.addEventListener("load", () => {
             let mailbox_aliases_table = document.querySelector("#mailbox_aliases_table");
             let mailbox_aliases_table_search = document.querySelector("#mailbox_aliases_search");
-            let res = new Table(mailbox_aliases_table, mailbox_aliases_table_search);
-            document.querySelector("#mailbox_aliases_search_form").addEventListener("submit", (e) => {e.preventDefault(); return false;})
+            new Table(mailbox_aliases_table, mailbox_aliases_table_search);
+            document.querySelector("#mailbox_aliases_search_form").addEventListener("submit", (e) => {
+                e.preventDefault();
+                return false;
+            })
         });
     </script>
 {% endblock %}
@@ -80,17 +83,49 @@
             My Domain Aliases
         </div>
         <div class="box-body">
+            <form class="form table-search" id="mailbox_aliases_search_form">
+                <div class="input-group">
+                    <input type="text" class="input" id="mailbox_aliases_search" aria-label="search"
+                           placeholder="search"/>
+                </div>
+            </form>
             <table class="table">
                 <thead>
                 <tr>
-                    <th>#</th>
                     <th>Domain</th>
                     <th>Goto</th>
-                    <th>Creation date</th>
-                    <th>Last edit</th>
                     <th>Enable</th>
                 </tr>
                 </thead>
+                <tbody>
+                {% for domain in domains %}
+                    {% for alias in domain.origineAlias %}
+                        <tr>
+                            <td>
+                                <span class="badge badge-info">
+                                    {{ domain.domain }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge badge-warning">
+                                    {{ alias.destination.domain }}
+                                </span>
+                            </td>
+                            <td>
+                                {% if alias.isActive %}
+                                    <span class="badge badge-success">
+                                        <span class="material-icons">check</span>
+                                    </span>
+                                {% else %}
+                                    <span class="badge badge-danger">
+                                        <span class="material-icons">close</span>
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>
