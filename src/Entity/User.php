@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use function count;
 
 #[ORM\Entity]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -77,8 +78,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): ?array
     {
-        if (\count($this->roles) === 0) {
-            $this->roles[0] = 'ROLE_USER';
+        if (count($this->roles) === 0 or !in_array("ROLE_USER", $this->roles)) {
+            $this->roles[] = 'ROLE_USER';
         }
 
         return $this->roles;
