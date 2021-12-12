@@ -14,6 +14,11 @@ class MailboxController extends AbstractController
     {
         $domains = $this->getUserOrThrow()->getDomains();
 
+        foreach ($domains as $domain) {
+            dump($domain);
+            dump(sizeof($domain->getOrigineAlias()));
+        }
+
         return $this->render('mailbox/index.html.twig', [
             'domains' => $domains,
         ]);

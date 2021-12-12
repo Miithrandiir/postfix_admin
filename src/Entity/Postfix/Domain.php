@@ -56,10 +56,18 @@ class Domain
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'domains')]
     private User $user;
 
+    #[ORM\OneToMany(mappedBy: 'origine', targetEntity: AliasDomain::class)]
+    private Collection $origineAlias;
+
+    #[ORM\OneToMany(mappedBy: 'destination', targetEntity: AliasDomain::class)]
+    private Collection $destinationAlias;
+
     public function __construct()
     {
         $this->mailboxes = new ArrayCollection();
         $this->aliases = new ArrayCollection();
+        $this->origineAlias = new ArrayCollection();
+        $this->destinationAlias = new ArrayCollection();
     }
 
     public function getDateCreated(): DateTimeInterface
@@ -226,4 +234,37 @@ class Domain
     {
         $this->user = $user;
     }
+
+    /**
+     * @return ArrayCollection|Collection
+     */
+    public function getOrigineAlias(): ArrayCollection|Collection
+    {
+        return $this->origineAlias;
+    }
+
+    /**
+     * @param ArrayCollection|Collection $origineAlias
+     */
+    public function setOrigineAlias(ArrayCollection|Collection $origineAlias): void
+    {
+        $this->origineAlias = $origineAlias;
+    }
+
+    /**
+     * @return ArrayCollection|Collection
+     */
+    public function getDestinationAlias(): ArrayCollection|Collection
+    {
+        return $this->destinationAlias;
+    }
+
+    /**
+     * @param ArrayCollection|Collection $destinationAlias
+     */
+    public function setDestinationAlias(ArrayCollection|Collection $destinationAlias): void
+    {
+        $this->destinationAlias = $destinationAlias;
+    }
+
 }
