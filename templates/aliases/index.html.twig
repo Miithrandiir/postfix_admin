@@ -7,12 +7,8 @@
     <script>
         window.addEventListener("load", () => {
             let mailbox_aliases_table = document.querySelector("#mailbox_aliases_table");
-            let mailbox_aliases_table_search = document.querySelector("#mailbox_aliases_search");
-            new Table(mailbox_aliases_table, mailbox_aliases_table_search);
-            document.querySelector("#mailbox_aliases_search_form").addEventListener("submit", (e) => {
-                e.preventDefault();
-                return false;
-            })
+            new Table(mailbox_aliases_table);
+            new Table(document.querySelector("#table_domain_aliases"));
         });
     </script>
 {% endblock %}
@@ -23,12 +19,6 @@
             My Mailbox Aliases
         </div>
         <div class="box-body">
-            <form class="form table-search" id="mailbox_aliases_search_form">
-                <div class="input-group">
-                    <input type="text" class="input" id="mailbox_aliases_search" aria-label="search"
-                           placeholder="search"/>
-                </div>
-            </form>
             <table class="table table-search" id="mailbox_aliases_table">
                 <thead>
                 <tr>
@@ -72,9 +62,6 @@
                 </tbody>
             </table>
 
-            <div class="pagination">
-
-            </div>
         </div>
     </div>
 
@@ -83,13 +70,7 @@
             My Domain Aliases
         </div>
         <div class="box-body">
-            <form class="form table-search" id="mailbox_aliases_search_form">
-                <div class="input-group">
-                    <input type="text" class="input" id="mailbox_aliases_search" aria-label="search"
-                           placeholder="search"/>
-                </div>
-            </form>
-            <table class="table">
+            <table class="table" id="table_domain_aliases">
                 <thead>
                 <tr>
                     <th>Domain</th>

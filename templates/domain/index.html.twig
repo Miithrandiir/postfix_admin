@@ -10,12 +10,7 @@
     <script>
         window.onload = () => {
             let domains_table = document.querySelector("#domains_table");
-            let domains_table_search = document.querySelector("#domains_search");
-            let res = new Table(domains_table, domains_table_search);
-            document.querySelector("#domains_search_form").addEventListener("submit", (e) => {
-                e.preventDefault();
-                return false;
-            })
+            let res = new Table(domains_table);
         };
     </script>
 
@@ -29,12 +24,6 @@
             My domains
         </div>
         <div class="box-body">
-            <form class="form table-search" id="domains_search_form">
-                <div class="input-group">
-                    <input type="text" class="input" id="domains_search" aria-label="search"
-                           placeholder="search"/>
-                </div>
-            </form>
             <table class="table" id="domains_table">
                 <thead>
                 <tr>

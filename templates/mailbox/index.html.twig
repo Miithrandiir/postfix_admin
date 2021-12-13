@@ -2,13 +2,24 @@
 
 {% block title %}Hello MailboxController!{% endblock %}
 
+{% block javascripts %}
+    {{ encore_entry_script_tags('table_search') }}
+    <script>
+        window.onload = () => {
+            let mailbox_table = document.querySelector("#mailbox_table");
+            let res = new Table(mailbox_table);
+        };
+    </script>
+
+{% endblock %}
+
 {% block body %}
     <div id="mailbox" class="box">
         <div class="box-header">
             My Mailboxes
         </div>
         <div class="box-body">
-            <table class="table">
+            <table class="table" id="mailbox_table">
                 <thead>
                 <tr>
                     <th>#</th>
