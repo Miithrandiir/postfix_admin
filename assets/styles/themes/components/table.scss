@@ -42,3 +42,31 @@ form.table-search {
   display: flex;
   align-items: flex-end;
 }
+
+div.pagination {
+  margin: 10px 0;
+  &>button {
+    background: var(--background);
+    padding: 10px;
+    border: 1px solid rgba(0,0,0,0.10);
+    color: var(--font-color);
+    font-size: 1.25em;
+    cursor: pointer;
+    transition: background 500ms ease-in-out;
+    &:first-child {
+      border-radius: 5px 0 0 5px;
+    }
+    &:last-child {
+      border-radius: 0 5px 5px 0;
+    }
+
+    &:hover {
+      background: var(--primary-transparent);
+    }
+  }
+  &>.button-disable {
+    background: var(--primary-transparent);
+    cursor: not-allowed;
+  }
+
+}

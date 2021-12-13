@@ -1,24 +1,30 @@
 export default class Table {
     Columns: Array<string>;
-    Data: Array<Array<string>>;
+    data: Array<Array<string>>;
     table: HTMLElement;
     search: HTMLInputElement;
 
+    page: number;
+    page_limit: number;
+
     constructor(table: HTMLElement) {
         this.Columns = new Array<string>();
-        this.Data = new Array<Array<string>>();
+        this.data = new Array<Array<string>>();
         this.table = table;
         this.extract();
         const form: HTMLFormElement = this.render_search_form();
         this.table.parentElement.insertBefore(form, this.table);
+        this.page = 1;
+        this.page_limit = 10;
+        this.render();
     }
 
     public render() {
-        let localData: Array<Array<string>> = this.Data;
+        let localData: Array<Array<string>> = this.data;
 
         if (this.search != null) {
             localData = new Array<Array<string>>();
-            this.Data.forEach((elt: Array<string>) => {
+            this.data.forEach((elt: Array<string>) => {
 
                 let flag = false;
                 elt.forEach((str: string) => {
@@ -31,30 +37,86 @@ export default class Table {
             });
         }
 
-        const html = document.createElement("tbody");
-
-        localData.forEach((data: Array<string>) => {
-            const tmp: Element = document.createElement("tr");
-
-            data.forEach((elt: string) => {
-                const td: HTMLElement = document.createElement("td");
-                td.innerHTML = elt;
-                tmp.appendChild(td);
-            })
-            html.append(tmp);
-        });
-
-        if (localData.length === 0) {
-            const tmp: Element = document.createElement("tr");
-            const td: HTMLTableCellElement = document.createElement("td");
-            td.textContent = "No data available.";
-            td.colSpan = this.Columns.length;
-            tmp.appendChild(td);
-            html.append(tmp);
-        }
-
+        //Generation of data
+        const html = this.pagination(localData);
         this.table.removeChild(this.table.querySelector("tbody"));
         this.table.appendChild(html);
+
+        this.render_pagination_button(localData);
+    }
+
+    private pagination(data: Array<Array<string>>): HTMLElement {
+        const tbody: HTMLElement = document.createElement("tbody");
+        const min = this.page_limit * (this.page-1);
+        const max = min + this.page_limit;
+        for (let i = min; i < max; i++) {
+            const tr: HTMLTableRowElement = document.createElement('tr');
+            if(i >= data.length)
+                break;
+            data[i].forEach((elt) => {
+                const td: HTMLTableCellElement = document.createElement('td');
+                td.innerHTML = elt;
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+        }
+
+        return tbody;
+    }
+
+    private render_pagination_button(data: Array<Array<string>>) {
+
+        if (this.table.parentElement.lastElementChild instanceof HTMLDivElement) {
+            this.table.parentElement.removeChild(this.table.parentElement.lastElementChild);
+        }
+        //Button Generation
+        const pagination_div: HTMLDivElement = document.createElement('div');
+        pagination_div.classList.add('pagination');
+        const pagination_first: HTMLButtonElement = document.createElement('button');
+        pagination_first.innerText = "<<"
+        pagination_first.onclick = () => {
+            this.page = 1;
+            this.render();
+        };
+        pagination_div.appendChild(pagination_first);
+
+
+        if (this.page - 1 > 0) {
+            const pagination_previous: HTMLButtonElement = document.createElement('button');
+            pagination_previous.innerText = (this.page - 1).toString();
+            pagination_previous.onclick = () => {
+                this.page--;
+                this.render();
+            };
+            pagination_div.appendChild(pagination_previous);
+        }
+
+        const pagination_actual: HTMLButtonElement = document.createElement('button');
+        pagination_actual.innerText = (this.page).toString();
+        pagination_actual.classList.add('button-disable');
+        pagination_actual.disabled = true;
+        pagination_div.appendChild(pagination_actual);
+
+        if (this.page + 1 <= Math.ceil(data.length/this.page_limit)) {
+            const pagination_next: HTMLButtonElement = document.createElement('button');
+            pagination_next.innerText = (this.page + 1).toString();
+            pagination_next.onclick = () => {
+                this.page++;
+                this.render();
+            };
+            pagination_div.appendChild(pagination_next);
+        }
+
+        const pagination_last: HTMLButtonElement = document.createElement('button');
+        pagination_last.innerText = ">>"
+        pagination_last.onclick = () => {
+            //this.page = (this.Data.length)/this.page_limit;
+            this.render();
+        };
+        pagination_div.appendChild(pagination_last);
+
+
+        this.table.parentElement.appendChild(pagination_div);
     }
 
     private extract() {
@@ -72,7 +134,7 @@ export default class Table {
             children.forEach((child: Element) => {
                 tmpArr.push(child.innerHTML);
             })
-            this.Data.push(tmpArr);
+            this.data.push(tmpArr);
         })
     }
 
@@ -94,6 +156,7 @@ export default class Table {
         input.placeholder = "search";
 
         input.onkeyup = () => {
+            this.page = 1;
             this.render();
         }
         this.search = input;
