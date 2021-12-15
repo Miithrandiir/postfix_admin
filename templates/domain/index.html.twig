@@ -10,7 +10,7 @@
     <script>
         window.onload = () => {
             let domains_table = document.querySelector("#domains_table");
-            let res = new Table(domains_table);
+            new Table(domains_table);
         };
     </script>
 
@@ -21,9 +21,11 @@
 {% block body %}
     <div class="domains box">
         <div class="box-header">
-            My domains
+            <h2>My domains</h2>
+            <a href="#" class="button button-success"><span class="material-icons">add</span> Add a domain</a>
         </div>
         <div class="box-body">
+
             <table class="table" id="domains_table">
                 <thead>
                 <tr>

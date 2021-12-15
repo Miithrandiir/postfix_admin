@@ -1,35 +1,43 @@
-button.button {
+.button {
   padding: 10px;
   color: var(--primary-font);
   background: var(--primary-base);
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Raleway", sans-serif;
 }
-button.button.button-disable {
+
+.button.button-disable {
   background: var(--transparent);
   cursor: not-allowed;
 }
 
 @each $value in ["primary","success","danger", "warning"] {
-  button.button.button-outline-#{$value} {
+  .button.button-outline-#{$value} {
     background: none;
     border: 2px solid var(--#{$value}-base);
     color: var(--font-color);
     transition: background 500ms ease-in-out;
+
     &:hover {
       background: var(--#{$value}-base);
       color: var(--#{$value}-font);
     }
   }
-  button.button.button-#{$value} {
+  .button.button-#{$value} {
     background: var(--#{$value}-base);
     color: var(--#{$value}-font);
     transition: background 500ms ease-in-out, color 500ms ease-in-out;
+
     &:hover {
       color: var(--font-color);
       background: none;
-      box-shadow:inset 0 0 0 1px var(--#{$value}-base);
+      box-shadow: inset 0 0 0 1px var(--#{$value}-base);
     }
   }
 }
