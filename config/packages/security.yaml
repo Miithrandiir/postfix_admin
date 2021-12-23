@@ -9,6 +9,14 @@ security:
             entity:
                 class: App\Entity\User
                 property: username
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER, ROLE_VIEW_ALL, ROLE_CREATE, ROLE_EDIT_ALL, ROLE_DELETE_ALL
+        ROLE_DELETE_ALL: ROLE_DELETE
+        ROLE_DELETE: ROLE_DEACTIVATE_ALL
+        ROLE_DEACTIVATE_ALL: ROLE_DEACTIVATE
+        ROLE_EDIT_ALL: ROLE_EDIT
+        ROLE_VIEW_ALL: ROLE_VIEW
+        ROLE_USER: ROLE_VIEW
 
     firewalls:
         dev:

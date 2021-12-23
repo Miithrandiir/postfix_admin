@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('domain') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('table_search') }}
+    <script>
+        window.onload = () => {
+            let domains_table = document.querySelector("#table_mailboxes_aliases");
+            new Table(domains_table);
+        };
+    </script>
+
+{% endblock %}
+
+{% block title %}My Domains{% endblock %}
+
+{% block body %}
+    <div class="view_domain">
+        <div class="content">
+            <div class="col">
+                <div class="block">
+                    <h1>
+                        <span class="material-icons">local_offer</span>
+                        {{ domain.domain }}
+                    </h1>
+                </div>
+
+                <div class="block">
+                    <div class="icon">
+                        <span class="material-icons">mail</span>
+                    </div>
+                    <div class="text">
+                        <span> 13</span>
+                        <span>Domains</span>
+                    </div>
+
+                </div>
+                <div class="block">
+                    <div class="icon">
+                        <span class="material-icons">alternate_email</span>
+                    </div>
+                    <div class="text">
+                        <span> 13</span>
+                        <span>Aliases</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="block w-100">
+                    <div style="width: 90%">
+                        <table class="table" id="table_mailboxes_aliases">
+                            <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Mailbox</th>
+                                <th>Description (M) / Destination (A)</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for mailbox in domain.mailboxes %}
+                                <tr>
+                                    <td><span class="badge badge-info">M</span></td>
+                                    <td><span class="badge badge-info">{{ mailbox.username }}@{{ domain.domain }}</span>
+                                    </td>
+                                    <td><span class="badge badge-info">{{ mailbox.name }}</span></td>
+                                    <td><a href="#" class="button button-success"><span class="material-icons">visibility</span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            {% for alias in domain.aliases %}
+                                <tr>
+                                    <td><span class="badge badge-danger">A</span></td>
+                                    <td><span class="badge badge-info">{{ alias.address }}@{{ domain.domain }}</span>
+                                    </td>
+                                    <td><span class="badge badge-danger">to: {{ alias.goto }}</span></td>
+                                    <td><a href="#" class="button button-success"><span class="material-icons">visibility</span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

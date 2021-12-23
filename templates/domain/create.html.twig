@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
+
+{% block title %}My Domains{% endblock %}
+
+{% block body %}
+    <div class="domains box">
+        <div class="box-header">
+            <h2>My domains</h2>
+        </div>
+        <div class="box-body">
+            {% form_theme form '_form.html.twig' %}
+            {{ form(form) }}
+        </div>
+    </div>
+{% endblock %}

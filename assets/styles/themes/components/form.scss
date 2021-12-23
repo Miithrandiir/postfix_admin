@@ -7,9 +7,36 @@ form.form {
     flex-direction: column;
     margin: 10px 0;
 
-    & > label {
+    & > .label {
       color: var(--font-color);
       font-family: 'Raleway', sans-serif;
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+
+      & > label {
+        margin: 0 5px 0 0;
+      }
+
+      & > .help-text {
+        font-style: italic;
+        font-size: 0.75em;
+      }
+    }
+  }
+}
+
+input[type=checkbox].input {
+  appearance: inherit;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  text-align: center;
+
+  &:checked {
+    &:after {
+      content: '✓';
+      color: var(--success-base);
     }
   }
 }

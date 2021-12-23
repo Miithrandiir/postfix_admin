@@ -22,7 +22,10 @@
     <div class="domains box">
         <div class="box-header">
             <h2>My domains</h2>
-            <a href="#" class="button button-success"><span class="material-icons">add</span> Add a domain</a>
+            {% if is_granted('ROLE_CREATE') %}
+                <a href="{{ path('domain_create') }}" class="button button-success"><span
+                            class="material-icons">add</span> Add a domain</a>
+            {% endif %}
         </div>
         <div class="box-body">
 
@@ -35,6 +38,7 @@
                     <th># Aliases</th>
                     <th>Backup</th>
                     <th>Enable</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -70,6 +74,11 @@
                                     <span class="material-icons">check</span>
                                 </span>
                             {% endif %}
+                        </td>
+                        <td>
+                            <a class="button button-success" href="{{ path('domain_view', {'id': item.id}) }}">
+                                <span class="material-icons">visibility</span>
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}
