@@ -73,12 +73,22 @@
                                 <span class="badge badge-success">
                                     <span class="material-icons">check</span>
                                 </span>
+                            {% else %}
+                                <span class="badge badge-danger">
+                                    <span class="material-icons">close</span>
+                                </span>
                             {% endif %}
                         </td>
                         <td>
                             <a class="button button-success" href="{{ path('domain_view', {'id': item.id}) }}">
                                 <span class="material-icons">visibility</span>
                             </a>
+                            {% if is_granted('ROLE_DEACTIVATE') %}
+                                <a class="button button-warning" href="{{ path('domain_activation', {'id': item.id}) }}"
+                                   title="deactivate">
+                                    <span class="material-icons">{{ item.isActive ? 'power_off' : 'power' }}</span>
+                                </a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}

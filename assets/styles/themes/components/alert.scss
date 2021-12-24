@@ -2,6 +2,11 @@
   color: var(--font-color);
   border-radius: 5px;
   padding: 10px;
+  margin: 10px 0;
+
+  & > ul {
+    list-style: none;
+  }
 }
 
 .alert-danger {

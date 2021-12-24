@@ -34,7 +34,7 @@
                         <span class="material-icons">mail</span>
                     </div>
                     <div class="text">
-                        <span> 13</span>
+                        <span> {{ domain.mailboxes.count }}</span>
                         <span>Domains</span>
                     </div>
 
@@ -44,7 +44,7 @@
                         <span class="material-icons">alternate_email</span>
                     </div>
                     <div class="text">
-                        <span> 13</span>
+                        <span> {{ domain.aliases.count }}</span>
                         <span>Aliases</span>
                     </div>
                 </div>

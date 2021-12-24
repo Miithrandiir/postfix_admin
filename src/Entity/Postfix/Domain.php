@@ -10,8 +10,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity, ORM\Table('postfix_domain')]
+#[UniqueEntity('domain')]
 class Domain
 {
     #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: Types::BIGINT)]
@@ -33,7 +35,7 @@ class Domain
     private int $max_quota;
 
     #[ORM\Column(type: Types::INTEGER)]
-    private int $quota;
+    private int $quota = 0;
 
     #[ORM\Column(name: 'backupmx', type: Types::BOOLEAN)]
     private bool $backup_mx;

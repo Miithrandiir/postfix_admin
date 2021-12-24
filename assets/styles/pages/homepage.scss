@@ -11,15 +11,17 @@
   &>.body {
     margin: 20px 0;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    &>.stat {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+    & > .stat {
       border-radius: 3px;
       padding: 20px;
       display: flex;
       background: var(--background-overlay);
       align-items: center;
-      margin: 0 5px;
-      &>.icon {
+      margin: 10px 5px;
+
+      & > .icon {
         background: var(--transparent);
         width: 70px;
         height: 70px;
@@ -27,7 +29,8 @@
         align-items: center;
         justify-content: center;
         border-radius: 5px;
-        &>span {
+
+        & > span {
           color: var(--primary-light);
           font-size: 3em;
         }
