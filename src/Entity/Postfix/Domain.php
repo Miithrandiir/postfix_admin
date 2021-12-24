@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity, ORM\Table('postfix_domain')]
 #[UniqueEntity('domain')]
@@ -19,7 +20,7 @@ class Domain
     #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: Types::BIGINT)]
     private int $id;
 
-    #[ORM\Column(type: Types::STRING, unique: true)]
+    #[ORM\Column(type: Types::STRING, unique: true), Assert\Hostname(message: 'The domain must be a valid hostname')]
     private string $domain;
 
     #[ORM\Column(type: Types::STRING)]

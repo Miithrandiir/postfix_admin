@@ -18,10 +18,10 @@ class NewDomainType extends AbstractType
         $builder
             ->add('domain', TextType::class, ['help' => 'domain.tld', 'attr' => ['class' => 'input']])
             ->add('description', TextType::class, ['help' => 'Description of your domain', 'attr' => ['class' => 'input']])
-            ->add('nb_aliases', IntegerType::class, ['help' => 'Maximum aliases allowed (0 = ∞)', 'attr' => ['class' => 'input'], 'data' => '0'])
-            ->add('nb_mailboxes', IntegerType::class, ['help' => 'Maximum mailboxes allowed (0 = ∞)', 'attr' => ['class' => 'input'], 'data' => '0'])
-            ->add('maxquota', IntegerType::class, ['help' => 'Maximum Quota in Bytes (0 = ∞)', 'label' => 'Quota', 'attr' => ['class' => 'input'], 'data' => '0'])
-            ->add('backupMx', CheckboxType::class, ['label' => 'Activate MX Backup', 'attr' => ['class' => 'input'], 'required' => false, 'data' => false])
+            ->add('nb_aliases', IntegerType::class, ['help' => 'Maximum aliases allowed (0 = ∞)', 'attr' => ['class' => 'input']])
+            ->add('nb_mailboxes', IntegerType::class, ['help' => 'Maximum mailboxes allowed (0 = ∞)', 'attr' => ['class' => 'input']])
+            ->add('maxquota', IntegerType::class, ['help' => 'Maximum Quota in Bytes (0 = ∞)', 'label' => 'Quota', 'attr' => ['class' => 'input']])
+            ->add('backupMx', CheckboxType::class, ['label' => 'Activate MX Backup', 'attr' => ['class' => 'input'], 'required' => false])
             ->add('is_active', CheckboxType::class, ['label' => 'should be activate ?', 'attr' => ['class' => 'input'], 'required' => false, 'data' => true])
             ->add('submit', SubmitType::class, ['attr' => ['class' => 'button']]);
     }
