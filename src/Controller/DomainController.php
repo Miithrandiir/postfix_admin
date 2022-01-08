@@ -26,8 +26,9 @@ class DomainController extends AbstractController
     #[Route('/domain/create', name: 'domain_create')]
     public function create(Request $request, ManagerRegistry $managerRegistry): Response
     {
-        if (!$this->isGranted("ROLE_CREATE"))
+        if (!$this->isGranted('ROLE_CREATE')) {
             return $this->permissionsErrorRedirect('domain');
+        }
 
         $domain = new Domain();
         $domainForm = $this->createForm(NewDomainType::class, $domain);
@@ -35,7 +36,6 @@ class DomainController extends AbstractController
         $domainForm->handleRequest($request);
 
         if ($domainForm->isSubmitted() && $domainForm->isValid()) {
-
             $domain->setDateCreated(new \DateTime());
             $domain->setDateModified(new \DateTime());
             $domain->setUser($this->getUserOrThrow());
@@ -44,9 +44,9 @@ class DomainController extends AbstractController
             $em->persist($domain);
             $em->flush();
             $this->addFlash('success', 'You have successfully create a new domain !');
+
             return $this->redirectToRoute('domain');
         }
-
 
         return $this->render('domain/create.html.twig', [
             'form' => $domainForm->createView(),
@@ -57,18 +57,15 @@ class DomainController extends AbstractController
     public function view(int $id, ManagerRegistry $managerRegistry): Response
     {
         $domains = $this->getUserOrThrow()->getDomains();
-        $domain = array_filter($domains->toArray(), function (Domain $v) use ($id) {
-            return $v->getId() == $id;
-        });
+        $domain = array_filter($domains->toArray(), fn(Domain $v) => $v->getId() === $id);
 
-        if (sizeof($domain) === 0) {
-
-            if (!$this->isGranted("ROLE_VIEW_ALL")) {
+        if (\count($domain) === 0) {
+            if (!$this->isGranted('ROLE_VIEW_ALL')) {
                 return $this->permissionsErrorRedirect('domain');
             }
 
             $domain = $managerRegistry->getRepository(Domain::class)->findBy(['id' => $id]);
-            if (sizeof($domain) === 0) {
+            if (\count($domain) === 0) {
                 return $this->redirectToRoute('domain');
             }
         }
@@ -86,13 +83,10 @@ class DomainController extends AbstractController
         }
 
         $domains = $this->getUserOrThrow()->getDomains();
-        $domain = array_filter($domains->toArray(), function (Domain $v) use ($id) {
-            return $v->getId() == $id;
-        });
+        $domain = array_filter($domains->toArray(), fn(Domain $v) => $v->getId() === $id);
 
         //if no domain found => Check in DB, but first we need to check if the user is allowed to deactivate all domains
-        if (sizeof($domain) === 0) {
-
+        if (\count($domain) === 0) {
             if (!$this->isGranted('ROLE_DEACTIVATE_ALL')) {
                 return $this->permissionsErrorRedirect('domain');
             }
@@ -101,40 +95,36 @@ class DomainController extends AbstractController
             $domain = $em->getRepository(Domain::class)->find($id);
             $domain->setIsActive(!$domain->getIsActive());
             $em->flush();
-
-
         } else {
             $domain[array_key_first($domain)]->setIsActive(!$domain[array_key_first($domain)]->getIsActive());
             $managerRegistry->getManager()->flush();
         }
 
         $this->addFlash('success', 'The domain has been successfully updated !');
+
         return $this->redirectToRoute('domain');
     }
 
     #[Route('domain/edit/{id}', name: 'domain_edit')]
     public function edit(int $id, ManagerRegistry $managerRegistry, Request $request): Response
     {
-
         if (!$this->isGranted('ROLE_EDIT')) {
             return $this->permissionsErrorRedirect('domain');
         }
 
         $domains = $this->getUserOrThrow()->getDomains();
-        $domain = array_filter($domains->toArray(), function (Domain $v) use ($id) {
-            return $v->getId() == $id;
-        });
+        $domain = array_filter($domains->toArray(), fn(Domain $v) => $v->getId() === $id);
 
-        if (sizeof($domain) === 0) {
+        if (\count($domain) === 0) {
             if (!$this->isGranted('ROLE_EDIT_ALL')) {
                 return $this->permissionsErrorRedirect('domain');
             }
             $domain = $managerRegistry->getRepository(Domain::class)->find($id);
 
-            if ($domain == null)
+            if ($domain === null) {
                 return $this->redirectToRoute('domain');
+            }
         }
-
 
         //render Form
         $form = $this->createForm(NewDomainType::class, $domain[array_key_first($domain)]);
@@ -143,35 +133,35 @@ class DomainController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $managerRegistry->getManager();
             $em->flush();
+
             return $this->redirectToRoute('domain');
         }
 
         return $this->render('domain/edit.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
     #[Route('domain/delete/{id}', name: 'domain_delete')]
     public function delete(int $id, ManagerRegistry $managerRegistry): Response
     {
-        if (!$this->isGranted('ROLE_DELETE'))
+        if (!$this->isGranted('ROLE_DELETE')) {
             return $this->permissionsErrorRedirect('domain');
+        }
 
         $domains = $this->getUserOrThrow()->getDomains();
-        $domain = array_filter($domains->toArray(), function (Domain $v) use ($id) {
-            return $v->getId() == $id;
-        });
+        $domain = array_filter($domains->toArray(), fn(Domain $v) => $v->getId() === $id);
 
-
-        if (sizeof($domain) === 0) {
-
-            if (!$this->isGranted('ROLE_DELETE_ALL'))
+        if (\count($domain) === 0) {
+            if (!$this->isGranted('ROLE_DELETE_ALL')) {
                 return $this->permissionsErrorRedirect('domain');
+            }
 
             $em = $managerRegistry->getManager();
             $domain_obj = $em->getRepository(Domain::class)->find($id);
-            if ($domain == null)
+            if ($domain === null) {
                 return $this->redirectToRoute('domain');
+            }
 
             $em->remove($domain_obj);
             $em->flush();

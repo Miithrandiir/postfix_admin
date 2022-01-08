@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Entity\Postfix\Domain;
@@ -30,7 +32,7 @@ class NewDomainType extends AbstractType
     {
         $resolver->setDefaults([
             // Configure your form options here
-            'data_class' => Domain::class
+            'data_class' => Domain::class,
         ]);
     }
 }

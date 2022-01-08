@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use Psr\Cache\CacheItemPoolInterface;
@@ -10,7 +12,7 @@ use Twig\TwigFunction;
 
 class ViteAssetExtension extends AbstractExtension
 {
-    private const CACHE_KEY = "je_l_appelle_comme_je_veux";
+    private const CACHE_KEY = 'je_l_appelle_comme_je_veux';
     private string $manifest;
     private CacheItemPoolInterface $cache;
     private RequestStack $requestStack;
@@ -19,7 +21,6 @@ class ViteAssetExtension extends AbstractExtension
 
     public function __construct(string $manifest, CacheItemPoolInterface $cacheItemPool, RequestStack $requestStack, KernelInterface $kernel)
     {
-
         $this->manifest = $manifest;
         $this->cache = $cacheItemPool;
         $this->requestStack = $requestStack;
@@ -29,7 +30,7 @@ class ViteAssetExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('vite_asset', [$this, 'asset'], ['is_safe' => ['html']])
+            new TwigFunction('vite_asset', [$this, 'asset'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -96,5 +97,4 @@ class ViteAssetExtension extends AbstractExtension
 
         return $html;
     }
-
 }

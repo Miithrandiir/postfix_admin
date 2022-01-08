@@ -20,8 +20,10 @@ abstract class AbstractController extends \Symfony\Bundle\FrameworkBundle\Contro
         throw new AccessDeniedException();
     }
 
-    public function permissionsErrorRedirect(string $route) : RedirectResponse {
+    public function permissionsErrorRedirect(string $route): RedirectResponse
+    {
         $this->addFlash('error', 'You don\'t have suffisent permissions');
+
         return $this->redirectToRoute($route);
     }
 }

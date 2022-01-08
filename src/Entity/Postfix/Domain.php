@@ -238,36 +238,23 @@ class Domain
         $this->user = $user;
     }
 
-    /**
-     * @return ArrayCollection|Collection
-     */
     public function getOrigineAlias(): ArrayCollection|Collection
     {
         return $this->origineAlias;
     }
 
-    /**
-     * @param ArrayCollection|Collection $origineAlias
-     */
     public function setOrigineAlias(ArrayCollection|Collection $origineAlias): void
     {
         $this->origineAlias = $origineAlias;
     }
 
-    /**
-     * @return ArrayCollection|Collection
-     */
     public function getDestinationAlias(): ArrayCollection|Collection
     {
         return $this->destinationAlias;
     }
 
-    /**
-     * @param ArrayCollection|Collection $destinationAlias
-     */
     public function setDestinationAlias(ArrayCollection|Collection $destinationAlias): void
     {
         $this->destinationAlias = $destinationAlias;
     }
-
 }
