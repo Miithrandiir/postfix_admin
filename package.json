@@ -13,10 +13,11 @@
     "license": "GPL-3.0-or-later",
     "private": true,
     "scripts": {
-        "dev-server": "encore dev-server",
         "dev": "vite --host",
-        "watch": "vite --host",
-        "build": "encore production --progress"
+        "build": "vite build  --emptyOutDir",
+        "serve": "vite preview",
+        "watch": "vite watch",
+        "lint": "eslint assets"
     },
     "dependencies": {
         "@fontsource/material-icons": "^4.5.0",

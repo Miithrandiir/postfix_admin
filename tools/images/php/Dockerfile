@@ -64,4 +64,5 @@ RUN wget https://get.symfony.com/cli/installer -O - | bash && \
   && addgroup _www _www
 COPY php.ini /usr/local/etc/php/php.ini
 COPY conf.d/ /usr/local/etc/php/conf.d/
+LABEL org.opencontainers.image.source = "https://github.com/Miithrandiir/postfix_admin"
 CMD ["php-fpm"]
