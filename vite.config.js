@@ -19,11 +19,11 @@ export default defineConfig({
                 manualChunks: undefined // On ne veut pas créer un fichier vendors, car on n'a ici qu'un point d'entré
             },
             input: {
-                'app.js': './app.js',
-                'login.js': './login.js',
-                'admin_panel.js': './admin_panel.js',
-                'domain.js': './domain.js',
-                'table_search.js': './table_search.js',
+                'app': './app.js',
+                'login': './login.js',
+                'admin_panel': './admin_panel.js',
+                'domain': './domain.js',
+                'table_search.ts': './table_search.ts',
             }
         }
     }
