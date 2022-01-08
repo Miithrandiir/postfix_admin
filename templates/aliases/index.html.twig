@@ -3,7 +3,7 @@
 {% block title %}Aliases{% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('table_search') }}
+    {{ vite_asset('table_search') }}
     <script>
         window.addEventListener("load", () => {
             let mailbox_aliases_table = document.querySelector("#mailbox_aliases_table");

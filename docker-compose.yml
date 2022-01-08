@@ -8,22 +8,23 @@ services:
       - .:/var/www/html
     user: ${CURRENT_UID}
 
-  apache:
-    image: httpd:alpine
+  nginx:
+    image: nginx
     ports:
       - 80:80
     depends_on:
       - php
     volumes:
       - ./public:/var/www/html/public
-      - ./tools/httpd/localhost.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
-      - ./tools/httpd/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./tools/nginx/nginx.local.conf:/etc/nginx/nginx.conf:ro
   yarn:
     image: node
     working_dir: /var/www
+    ports:
+      - 3000:3000
     volumes:
       - .:/var/www
-    command: /bin/sh -c "yarn && yarn encore dev --watch"
+    command: /bin/sh -c "yarn && yarn dev"
 networks:
   default:
     external:

@@ -1,13 +1,10 @@
 {% extends 'base_without_panel.html.twig' %}
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags('app') }}
-    {{ encore_entry_link_tags('login') }}
+    {{ vite_asset('app') }}
+    {{ vite_asset('login') }}
 {% endblock %}
 
-{% block javascripts %}
-    {{ encore_entry_script_tags('login') }}
-{% endblock %}
 
 {% block title %}Log in!{% endblock %}
 
@@ -25,7 +22,8 @@
 
                 {% if app.user %}
                     <div class="mb-3">
-                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                        You are logged in as {{ app.user.userIdentifier }}, <a
+                                href="{{ path('app_logout') }}">Logout</a>
                     </div>
                 {% endif %}
 

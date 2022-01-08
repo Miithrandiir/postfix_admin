@@ -3,7 +3,7 @@
 {% block title %}Hello MailboxController!{% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('table_search') }}
+    {{ vite_asset('table_search') }}
     <script>
         window.onload = () => {
             let mailbox_table = document.querySelector("#mailbox_table");

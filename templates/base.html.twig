@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <title>{% block title %}Postfix Admin Panel - {% endblock %}</title>
 
-    {{ encore_entry_link_tags('app') }}
-    {{ encore_entry_link_tags('admin_panel') }}
+    {{ vite_asset('app') }}
+    {{ vite_asset('admin_panel') }}
     {% block stylesheets %}
 
     {% endblock %}
 
-    {# DEFAULT #}
-    {{ encore_entry_script_tags('app') }}
-    {{ encore_entry_link_tags('admin_panel') }}
     {% block javascripts %}
 
     {% endblock %}

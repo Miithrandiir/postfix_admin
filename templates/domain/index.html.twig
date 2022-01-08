@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('table_search') }}
+    {{ vite_asset('table_search') }}
     <script>
         window.onload = () => {
             let domains_table = document.querySelector("#domains_table");

@@ -2,11 +2,11 @@
 
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags('domain') }}
+    {{ vite_asset('domain') }}
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('table_search') }}
+    {{ vite_asset('table_search') }}
     <script>
         window.onload = () => {
             let domains_table = document.querySelector("#table_mailboxes_aliases");
