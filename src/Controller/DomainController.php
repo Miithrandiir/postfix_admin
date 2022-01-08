@@ -93,6 +93,9 @@ class DomainController extends AbstractController
 
             $em = $managerRegistry->getManager();
             $domain = $em->getRepository(Domain::class)->find($id);
+            if ($domain === null) {
+                return $this->permissionsErrorRedirect('domain');
+            }
             $domain->setIsActive(!$domain->getIsActive());
             $em->flush();
         } else {
@@ -127,7 +130,7 @@ class DomainController extends AbstractController
         }
 
         //render Form
-        $form = $this->createForm(NewDomainType::class, $domain[array_key_first($domain)]);
+        $form = $this->createForm(NewDomainType::class, $domain instanceof Domain ? $domain : $domain[array_key_first($domain)]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -159,7 +162,7 @@ class DomainController extends AbstractController
 
             $em = $managerRegistry->getManager();
             $domain_obj = $em->getRepository(Domain::class)->find($id);
-            if ($domain === null) {
+            if ($domain_obj === null) {
                 return $this->redirectToRoute('domain');
             }
 
