@@ -59,7 +59,6 @@ class DomainControllerTest extends WebTestCase
         $this->login('admin@domain.tld');
         $crawler = $this->client->request('GET', '/domain');
         $domain_name = $crawler->filter("table#domains_table>tbody>tr:first-child td:nth-child(2) span")->getNode(0)->textContent;
-        dump($domain_name);
         $this->client->click($crawler->filter("table#domains_table>tbody>tr:first-child td:last-child a:last-child")->eq(0)->link());
 
         $always_exist = $this->em->getRepository(Domain::class)->findOneBy(['domain' => $domain_name]);
