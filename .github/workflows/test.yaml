@@ -9,6 +9,14 @@ jobs:
       - uses: actions/checkout@v2
       - name: security:check
         run: symfony security:check
+  test:
+    name: Unit test
+    runs-on: ubuntu-latest
+    container: ghcr.io/miithrandiir/postfix_admin
+    steps:
+      - uses: actions/checkout@v2
+      - name: PHP Test
+        run: make test
   lint:
     name: lint
     runs-on: ubuntu-latest
