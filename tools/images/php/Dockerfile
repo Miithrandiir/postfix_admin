@@ -15,6 +15,7 @@ RUN apt install libcurl4-openssl-dev -y
 RUN apt install unixodbc-dev -y
 RUN apt install libpng-dev -y
 RUN apt install libgmp-dev -y
+RUN apt install sqlite3 -y
 RUN set -ex; \
 	docker-php-source extract; \
 	{ \
@@ -32,13 +33,11 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ 
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-install opcache
 RUN docker-php-ext-install pdo
-#RUN docker-php-ext-install json
 RUN docker-php-ext-install zip
 RUN docker-php-ext-install intl
 RUN docker-php-ext-install xml
 RUN docker-php-ext-install ctype
 RUN docker-php-ext-install mbstring
-#RUN docker-php-ext-install readline
 RUN docker-php-ext-install simplexml
 RUN docker-php-ext-install phar
 RUN docker-php-ext-install curl
@@ -52,10 +51,6 @@ RUN apt-get install libyaml-dev -y && pecl install yaml && docker-php-ext-enable
 # Install Redis PHP extension.
 RUN pecl install redis \
     &&  docker-php-ext-enable redis
-# Install Calendar PHP extension.
-RUN docker-php-ext-configure calendar && docker-php-ext-install calendar
-# Install xslt PHP extension.
-RUN apt install libxslt1-dev -y && docker-php-ext-configure xsl && docker-php-ext-install xsl
 # Symfony tool
 RUN wget https://get.symfony.com/cli/installer -O - | bash && \
   mv /root/.symfony/bin/symfony /usr/local/bin/symfony \

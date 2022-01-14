@@ -2,8 +2,7 @@ version: '3'
 
 services:
   php:
-    build:
-      context: ./tools/images/php
+    image: ghcr.io/miithrandiir/postfix_admin
     volumes:
       - .:/var/www/html
     user: ${CURRENT_UID}
