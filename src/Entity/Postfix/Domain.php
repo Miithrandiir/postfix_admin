@@ -257,4 +257,92 @@ class Domain
     {
         $this->destinationAlias = $destinationAlias;
     }
+
+    public function addMailbox(Mailbox $mailbox): self
+    {
+        if (!$this->mailboxes->contains($mailbox)) {
+            $this->mailboxes[] = $mailbox;
+            $mailbox->setDomain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMailbox(Mailbox $mailbox): self
+    {
+        if ($this->mailboxes->removeElement($mailbox)) {
+            // set the owning side to null (unless already changed)
+            if ($mailbox->getDomain() === $this) {
+                $mailbox->setDomain(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addAlias(Alias $alias): self
+    {
+        if (!$this->aliases->contains($alias)) {
+            $this->aliases[] = $alias;
+            $alias->setDomain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlias(Alias $alias): self
+    {
+        if ($this->aliases->removeElement($alias)) {
+            // set the owning side to null (unless already changed)
+            if ($alias->getDomain() === $this) {
+                $alias->setDomain(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addOrigineAlias(AliasDomain $origineAlias): self
+    {
+        if (!$this->origineAlias->contains($origineAlias)) {
+            $this->origineAlias[] = $origineAlias;
+            $origineAlias->setOrigine($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrigineAlias(AliasDomain $origineAlias): self
+    {
+        if ($this->origineAlias->removeElement($origineAlias)) {
+            // set the owning side to null (unless already changed)
+            if ($origineAlias->getOrigine() === $this) {
+                $origineAlias->setOrigine(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addDestinationAlias(AliasDomain $destinationAlias): self
+    {
+        if (!$this->destinationAlias->contains($destinationAlias)) {
+            $this->destinationAlias[] = $destinationAlias;
+            $destinationAlias->setDestination($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDestinationAlias(AliasDomain $destinationAlias): self
+    {
+        if ($this->destinationAlias->removeElement($destinationAlias)) {
+            // set the owning side to null (unless already changed)
+            if ($destinationAlias->getDestination() === $this) {
+                $destinationAlias->setDestination(null);
+            }
+        }
+
+        return $this;
+    }
 }

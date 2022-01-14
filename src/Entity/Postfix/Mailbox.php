@@ -151,4 +151,9 @@ class Mailbox
     {
         $this->active = $active;
     }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
 }

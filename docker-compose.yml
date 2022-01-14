@@ -7,7 +7,6 @@ services:
     volumes:
       - .:/var/www/html
     user: ${CURRENT_UID}
-
   nginx:
     image: nginx
     ports:
@@ -25,6 +24,10 @@ services:
     volumes:
       - .:/var/www
     command: /bin/sh -c "yarn && yarn dev"
+
+volumes:
+  db_data:
+    driver: local
 networks:
   default:
     external:

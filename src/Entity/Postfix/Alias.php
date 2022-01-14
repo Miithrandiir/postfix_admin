@@ -96,6 +96,11 @@ class Alias
         return $this->is_active;
     }
 
+    public function getIsActive(): ?bool
+    {
+        return $this->is_active;
+    }
+
     public function setIsActive(bool $is_active): void
     {
         $this->is_active = $is_active;

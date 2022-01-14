@@ -82,4 +82,9 @@ class AliasDomain
     {
         $this->is_active = $is_active;
     }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->is_active;
+    }
 }
