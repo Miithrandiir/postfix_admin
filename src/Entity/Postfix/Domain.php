@@ -57,7 +57,7 @@ class Domain
     private Collection $aliases;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'domains')]
-    private User $user;
+    private ?User $user;
 
     #[ORM\OneToMany(mappedBy: 'origine', targetEntity: AliasDomain::class)]
     private Collection $origineAlias;
@@ -228,12 +228,12 @@ class Domain
         $this->aliases = $aliases;
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(User $user): void
+    public function setUser(?User $user): void
     {
         $this->user = $user;
     }
@@ -270,12 +270,7 @@ class Domain
 
     public function removeMailbox(Mailbox $mailbox): self
     {
-        if ($this->mailboxes->removeElement($mailbox)) {
-            // set the owning side to null (unless already changed)
-            if ($mailbox->getDomain() === $this) {
-                $mailbox->setDomain(null);
-            }
-        }
+        $this->mailboxes->removeElement($mailbox);
 
         return $this;
     }
@@ -312,37 +307,4 @@ class Domain
         return $this;
     }
 
-    public function removeOrigineAlias(AliasDomain $origineAlias): self
-    {
-        if ($this->origineAlias->removeElement($origineAlias)) {
-            // set the owning side to null (unless already changed)
-            if ($origineAlias->getOrigine() === $this) {
-                $origineAlias->setOrigine(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function addDestinationAlias(AliasDomain $destinationAlias): self
-    {
-        if (!$this->destinationAlias->contains($destinationAlias)) {
-            $this->destinationAlias[] = $destinationAlias;
-            $destinationAlias->setDestination($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDestinationAlias(AliasDomain $destinationAlias): self
-    {
-        if ($this->destinationAlias->removeElement($destinationAlias)) {
-            // set the owning side to null (unless already changed)
-            if ($destinationAlias->getDestination() === $this) {
-                $destinationAlias->setDestination(null);
-            }
-        }
-
-        return $this;
-    }
 }
