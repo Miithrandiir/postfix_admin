@@ -78,6 +78,8 @@ class DomainControllerTest extends WebTestCase
         $domain_name = $crawler->filter("table#domains_table>tbody>tr:first-child td:nth-child(2) span")->getNode(0)->textContent;
         $this->client->click($crawler->filter("table#domains_table>tbody>tr:first-child td:last-child a:nth-child(2)")->eq(0)->link());
         $this->assertResponseRedirects();
+        $this->client->followRedirect();
+        $this->em->clear('App\Entity\Postfix\Domain');
         $domain = $this->em->getRepository(Domain::class)->findOneBy(['domain' => $domain_name]);
         $this->assertNotNull($domain);
         // In fixtures, by default all domains are activate !
@@ -114,5 +116,16 @@ class DomainControllerTest extends WebTestCase
         self::assertEquals('generate with unit test', $domainTest->getDescription());
         self::assertEquals(0, $domainTest->getNbMailboxes());
         self::assertEquals(true, $domainTest->getBackupMx());
+    }
+
+    public function testViewDomain(): void
+    {
+        $this->login('admin@domain.tld');
+        $crawler = $this->client->request('GET', '/domain');
+        $domain_name = $crawler->filter("table#domains_table>tbody>tr:first-child td:nth-child(2) span")->getNode(0)->textContent;
+        $crawler = $this->client->click($crawler->filter("table#domains_table>tbody>tr:first-child td:last-child a:nth-child(1)")->eq(0)->link());
+        $this->assertRouteSame('domain_view');
+        $this->assertResponseIsSuccessful();
+        $this->assertEquals(10, $crawler->filter("#table_mailboxes_aliases>tbody>tr")->count());
     }
 }

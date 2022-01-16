@@ -2,7 +2,9 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Postfix\Alias;
 use App\Entity\Postfix\Domain;
+use App\Entity\Postfix\Mailbox;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -46,7 +48,37 @@ class AppFixtures extends Fixture
             $domain->setNbMailboxes(0);
             $domain->setMaxQuota(0);
             $manager->persist($domain);
+            /**
+             * Mailboxes creation
+             */
+            for ($y = 0; $y < 5; ++$y) {
+                $mailbox = new Mailbox();
+                $mailbox->setPassword("My Secret password");
+                $mailbox->setUsername("user{$y}");
+                $mailbox->setDateModified(new \DateTimeImmutable());
+                $mailbox->setDateCreated(new \DateTimeImmutable());
+                $mailbox->setActive(true);
+                $mailbox->setDomain($domain);
+                $mailbox->setQuota(0);
+                $mailbox->setMailDir("");
+                $mailbox->setFirstname("Unit Test Joe");
+                $domain->addMailbox($mailbox);
+                $manager->persist($mailbox);
+            }
+
+            for ($w = 0; $w < 5; ++$w) {
+                $alias = new Alias();
+                $alias->setDomain($domain);
+                $domain->addAlias($alias);
+                $alias->setDateCreated(new \DateTimeImmutable());
+                $alias->setDateModified(new \DateTimeImmutable());
+                $alias->setIsActive(true);
+                $alias->setAddress("alias{$w}");
+                $alias->setGoto("user{$w}@{$domain->getDomain()}");
+                $manager->persist($alias);
+            }
         }
+
 
         $manager->flush();
     }

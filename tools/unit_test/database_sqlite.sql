@@ -96,8 +96,7 @@ create table postfix_backup_server_domain
 DROP TABLE IF EXISTS postfix_mailbox;
 create table postfix_mailbox
 (
-    id            int auto_increment
-        primary key,
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
     domain_id     INTEGER      not null,
     username      varchar(255) not null,
     password      varchar(255) not null,
