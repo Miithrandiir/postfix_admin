@@ -70,4 +70,49 @@ class DomainControllerTest extends WebTestCase
         $this->assertRouteSame('domain');
 
     }
+
+    public function testDisableDomain(): void
+    {
+        $this->login('admin@domain.tld');
+        $crawler = $this->client->request('GET', '/domain');
+        $domain_name = $crawler->filter("table#domains_table>tbody>tr:first-child td:nth-child(2) span")->getNode(0)->textContent;
+        $this->client->click($crawler->filter("table#domains_table>tbody>tr:first-child td:last-child a:nth-child(2)")->eq(0)->link());
+        $this->assertResponseRedirects();
+        $domain = $this->em->getRepository(Domain::class)->findOneBy(['domain' => $domain_name]);
+        $this->assertNotNull($domain);
+        // In fixtures, by default all domains are activate !
+        $this->assertEquals(false, $domain->getIsActive());
+    }
+
+    public function testEditDomain(): void
+    {
+        $this->login('admin@domain.tld');
+        $crawler = $this->client->request('GET', '/domain');
+        $domain_name = $crawler->filter("table#domains_table>tbody>tr:first-child td:nth-child(2) span")->getNode(0)->textContent;
+        $this->client->click($crawler->filter("table#domains_table>tbody>tr:first-child td:last-child a:nth-child(3)")->eq(0)->link());
+        $this->assertRouteSame('domain_edit');
+
+        $repository = $this->em->getRepository(Domain::class);
+
+        $domain = $repository->findOneBy(['domain' => $domain_name]);
+        $this->assertNotNull($domain);
+        $crawler = $this->client->submitForm('Submit', [
+            'new_domain[domain]' => $domain_name,
+            'new_domain[description]' => 'generate with unit test',
+            'new_domain[nb_aliases]' => $domain->getNbAliases(),
+            'new_domain[nb_mailboxes]' => '0',
+            'new_domain[maxquota]' => $domain->getMaxQuota(),
+            'new_domain[backupMx]' => true,
+            'new_domain[is_active]' => $domain->getIsActive()
+        ]);
+        self::assertResponseRedirects();
+        $this->client->followRedirect();
+        $this->em->clear("App\Entity\Postfix\Domain");
+        $domainTest = $repository->findOneBy(['domain' => $domain_name]);
+        self::assertNotNull($domainTest);
+        self::assertEquals($domain_name, $domainTest->getDomain());
+        self::assertEquals('generate with unit test', $domainTest->getDescription());
+        self::assertEquals(0, $domainTest->getNbMailboxes());
+        self::assertEquals(true, $domainTest->getBackupMx());
+    }
 }

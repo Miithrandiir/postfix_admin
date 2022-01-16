@@ -2,9 +2,9 @@
 
 namespace App\Tests\Controller;
 
-use _PHPStan_e04cc8dfb\Nette\Neon\Exception;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 /**
