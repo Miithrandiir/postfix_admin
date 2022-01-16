@@ -19,7 +19,7 @@ class Alias
     private int $id;
 
     #[ManyToOne(targetEntity: Domain::class, inversedBy: 'aliases')]
-    private Domain $domain;
+    private ?Domain $domain;
 
     #[Column(name: 'adress', type: Types::STRING)]
     private string $address;
@@ -41,12 +41,12 @@ class Alias
         return $this->id;
     }
 
-    public function getDomain(): Domain
+    public function getDomain(): ?Domain
     {
         return $this->domain;
     }
 
-    public function setDomain(Domain $domain): void
+    public function setDomain(?Domain $domain): void
     {
         $this->domain = $domain;
     }
@@ -92,6 +92,11 @@ class Alias
     }
 
     public function isIsActive(): bool
+    {
+        return $this->is_active;
+    }
+
+    public function getIsActive(): ?bool
     {
         return $this->is_active;
     }

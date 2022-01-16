@@ -31,3 +31,23 @@ jobs:
         run: yarn build
       - name: Linter
         run: yarn lint
+      - uses: actions/upload-artifact@v2
+        with:
+          name: yarn-build
+          path: public/build
+          retention-days: 1
+  test:
+    name: Unit test
+    runs-on: ubuntu-latest
+    container: ghcr.io/miithrandiir/postfix_admin
+    needs: yarn
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: yarn-build
+          path: public/build
+      - name: Composer
+        run: composer install --prefer-dist --no-ansi --no-interaction --no-progress
+      - name: PHP Test
+        run: make test

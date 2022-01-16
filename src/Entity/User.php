@@ -109,4 +109,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->username;
     }
+
+    public function addDomain(Domain $domain): self
+    {
+        if (!$this->domains->contains($domain)) {
+            $this->domains[] = $domain;
+            $domain->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDomain(Domain $domain): self
+    {
+        if ($this->domains->removeElement($domain)) {
+            // set the owning side to null (unless already changed)
+            if ($domain->getUser() === $this) {
+                $domain->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 }

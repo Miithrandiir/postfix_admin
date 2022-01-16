@@ -57,7 +57,7 @@ class Domain
     private Collection $aliases;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'domains')]
-    private User $user;
+    private ?User $user;
 
     #[ORM\OneToMany(mappedBy: 'origine', targetEntity: AliasDomain::class)]
     private Collection $origineAlias;
@@ -228,12 +228,12 @@ class Domain
         $this->aliases = $aliases;
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(User $user): void
+    public function setUser(?User $user): void
     {
         $this->user = $user;
     }
@@ -257,4 +257,54 @@ class Domain
     {
         $this->destinationAlias = $destinationAlias;
     }
+
+    public function addMailbox(Mailbox $mailbox): self
+    {
+        if (!$this->mailboxes->contains($mailbox)) {
+            $this->mailboxes[] = $mailbox;
+            $mailbox->setDomain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMailbox(Mailbox $mailbox): self
+    {
+        $this->mailboxes->removeElement($mailbox);
+
+        return $this;
+    }
+
+    public function addAlias(Alias $alias): self
+    {
+        if (!$this->aliases->contains($alias)) {
+            $this->aliases[] = $alias;
+            $alias->setDomain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlias(Alias $alias): self
+    {
+        if ($this->aliases->removeElement($alias)) {
+            // set the owning side to null (unless already changed)
+            if ($alias->getDomain() === $this) {
+                $alias->setDomain(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addOrigineAlias(AliasDomain $origineAlias): self
+    {
+        if (!$this->origineAlias->contains($origineAlias)) {
+            $this->origineAlias[] = $origineAlias;
+            $origineAlias->setOrigine($this);
+        }
+
+        return $this;
+    }
+
 }
