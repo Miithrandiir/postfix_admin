@@ -17,6 +17,10 @@
     <div id="mailbox" class="box">
         <div class="box-header">
             <h2>My Mailboxes</h2>
+            {% if is_granted('ROLE_CREATE') %}
+                <a href="{{ path('mailbox_create') }}" class="button button-success" id="create_mailbox"><span
+                            class="material-icons">add</span> Add a mailbox</a>
+            {% endif %}
         </div>
         <div class="box-body">
             <table class="table" id="mailbox_table">

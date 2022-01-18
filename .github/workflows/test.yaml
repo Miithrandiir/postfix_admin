@@ -50,4 +50,4 @@ jobs:
       - name: Composer
         run: composer install --prefer-dist --no-ansi --no-interaction --no-progress
       - name: PHP Test
-        run: make test
+        run: make pre-test && make test

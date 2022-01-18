@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity\Postfix;
 
 use App\Entity\User;
+use App\Repository\DomainRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity, ORM\Table('postfix_domain')]
+#[ORM\Entity(repositoryClass: DomainRepository::class), ORM\Table('postfix_domain')]
 #[UniqueEntity('domain')]
 class Domain
 {
