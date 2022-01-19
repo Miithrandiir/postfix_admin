@@ -87,8 +87,7 @@ class DomainController extends AbstractController
 
         //if no domain found => Check in DB, but first we need to check if the user is allowed to deactivate all domains
         if (\count($domainArr) !== 0) {
-            $domain = $domainArr[0];
-            $domain[array_key_first($domain)]->setIsActive(!$domain[array_key_first($domain)]->getIsActive());
+            $domainArr[array_key_first($domainArr)]->setIsActive(!$domainArr[array_key_first($domainArr)]->getIsActive());
             $managerRegistry->getManager()->flush();
         } else {
             if (!$this->isGranted('ROLE_DEACTIVATE_ALL')) {
