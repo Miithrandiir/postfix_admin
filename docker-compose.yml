@@ -23,11 +23,15 @@ services:
     volumes:
       - .:/var/www
     command: /bin/sh -c "yarn && yarn dev"
-
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: postfix
+      MYSQL_DATABASE: postfix
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - 3306:3306
 volumes:
   db_data:
     driver: local
-networks:
-  default:
-    external:
-      name: postfix_admin_default

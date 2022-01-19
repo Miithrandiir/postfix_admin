@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace App\Entity\Postfix;
 
+use App\Repository\MailboxRepository;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-#[ORM\Entity, ORM\Table('postfix_mailbox')]
+#[ORM\Entity(repositoryClass: MailboxRepository::class), ORM\Table('postfix_mailbox')]
+#[ORM\UniqueConstraint(name: "mailbox_unique", columns: ["domain_id", "username"])]
+#[UniqueEntity(
+    fields: ['domain', 'username'],
+    message: 'This username is already use',
+    errorPath: 'username'
+)]
 class Mailbox
 {
     #[ORM\Id, ORM\GeneratedValue, ORM\Column(type: Types::BIGINT)]
@@ -23,7 +31,7 @@ class Mailbox
     #[ORM\Column(type: Types::STRING)]
     private string $password;
 
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $name;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]

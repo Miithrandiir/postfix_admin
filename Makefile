@@ -5,9 +5,12 @@ lint:
 	./vendor/bin/phpstan analyse --memory-limit=-1
 format:
 	./vendor/bin/php-cs-fixer fix --allow-risky=yes
-test:
+php:
+	docker-compose exec php bash
+pre-test:
 	APP_ENV=test php bin/console doctrine:database:drop --force || true
 	APP_ENV=test php bin/console doctrine:database:create || true
-	sqlite3 ./var/data_test.db ".read ./tools/unit_test/database_sqlite.sql"
+	APP_ENV=test php bin/console doctrine:schema:create || true
 	APP_ENV=test php bin/console doctrine:fixtures:load -n
+test:
 	APP_ENV=test php bin/phpunit
