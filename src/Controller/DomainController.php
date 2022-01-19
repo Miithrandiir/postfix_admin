@@ -83,24 +83,26 @@ class DomainController extends AbstractController
         }
 
         $domains = $this->getUserOrThrow()->getDomains();
-        $domain = array_filter($domains->toArray(), fn(Domain $v) => $v->getId() === $id);
+        $domainArr = array_filter($domains->toArray(), fn(Domain $v) => $v->getId() === $id);
 
         //if no domain found => Check in DB, but first we need to check if the user is allowed to deactivate all domains
-        if (\count($domain) === 0) {
+        if (\count($domainArr) !== 0) {
+            $domain = $domainArr[0];
+            $domain[array_key_first($domain)]->setIsActive(!$domain[array_key_first($domain)]->getIsActive());
+            $managerRegistry->getManager()->flush();
+        } else {
             if (!$this->isGranted('ROLE_DEACTIVATE_ALL')) {
                 return $this->permissionsErrorRedirect('domain');
             }
 
             $em = $managerRegistry->getManager();
-            $domain = $em->getRepository(Domain::class)->find($id);
-            if ($domain === null) {
+
+            $domainObj = $em->getRepository(Domain::class)->find($id);
+            if ($domainObj === null) {
                 return $this->permissionsErrorRedirect('domain');
             }
-            $domain->setIsActive(!$domain->getIsActive());
+            $domainObj->setIsActive(!$domainObj->getIsActive());
             $em->flush();
-        } else {
-            $domain[array_key_first($domain)]->setIsActive(!$domain[array_key_first($domain)]->getIsActive());
-            $managerRegistry->getManager()->flush();
         }
 
         $this->addFlash('success', 'The domain has been successfully updated !');
