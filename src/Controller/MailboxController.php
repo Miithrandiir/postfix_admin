@@ -82,4 +82,23 @@ class MailboxController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route("/admin/deactivate/{id}")]
+    public function deactivate(int $id, ManagerRegistry $mr): Response
+    {
+        $mailbox = $mr->getRepository(Mailbox::class)->find($id);
+        if ($mailbox === null)
+            return $this->redirectToRoute('mailbox');
+
+        //Check if the mailbox is owned by the user
+        if ($mailbox->getDomain()->getUser() === null || ($mailbox->getDomain()->getUser()->getId() !== $this->getUserOrThrow()->getId() && !$this->isGranted('ROLE_DEACTIVATE_ALL'))) {
+            return $this->redirectToRoute('mailbox');
+        }
+
+        $mailbox->setActive(!$mailbox->getActive());
+        $mr->getManager()->flush();
+
+        return $this->redirectToRoute('mailbox');
+
+    }
 }

@@ -66,8 +66,16 @@
                                 {% endif %}
                             </td>
                             <td>
+                                {% if is_granted('ROLE_DEACTIVATE') %}
+                                    <a class="button button-warning deactivate"
+                                       href="{{ path('app_mailbox_deactivate', {'id': mailbox.id}) }}"
+                                       title="deactivate">
+                                        <span class="material-icons">{{ mailbox.isActive ? 'power_off' : 'power' }}</span>
+                                    </a>
+                                {% endif %}
+
                                 {% if is_granted('ROLE_EDIT') %}
-                                    <a class="button button-primary"
+                                    <a class="button button-primary edit"
                                        href="{{ path('mailbox_edit', {'id': mailbox.id}) }}"
                                        title="edit">
                                         <span class="material-icons">edit</span>
