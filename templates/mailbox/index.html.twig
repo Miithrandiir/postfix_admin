@@ -32,6 +32,7 @@
                     <th>Firstname</th>
                     <th>Quota</th>
                     <th>Enable</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -62,6 +63,15 @@
                                     <span class="badge badge-danger">
                                         <span class="material-icons">close</span>
                                     </span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if is_granted('ROLE_EDIT') %}
+                                    <a class="button button-primary"
+                                       href="{{ path('mailbox_edit', {'id': mailbox.id}) }}"
+                                       title="edit">
+                                        <span class="material-icons">edit</span>
+                                    </a>
                                 {% endif %}
                             </td>
                         </tr>

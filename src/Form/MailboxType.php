@@ -26,11 +26,20 @@ class MailboxType extends AbstractType
                     return $er->findDomainByIdQueryBuilder($options['user_id']);
                 },
                 'choice_label' => 'domain',
+                'choice_value' => 'id',
                 'attr' => ['class' => 'input']
 
             ])
-            ->add('username', TextType::class, ['required' => false, 'attr' => ['class' => 'input']])
-            ->add('password', PasswordType::class, ['required' => true, 'attr' => ['class' => 'input']])
+            ->add('username', TextType::class, ['required' => true, 'attr' => ['class' => 'input']]);
+
+        if ($options['is_edit']) {
+            $builder->add('password', PasswordType::class, ['required' => false, 'attr' => ['class' => 'input'], 'empty_data' => ""]);
+        } else {
+            $builder
+                ->add('password', PasswordType::class, ['required' => true, 'attr' => ['class' => 'input']]);
+        }
+
+        $builder
             ->add('name', TextType::class, ['required' => false, 'attr' => ['class' => 'input']])
             ->add('firstname', TextType::class, ['required' => false, 'attr' => ['class' => 'input']])
             ->add('mailDir', TextType::class, ['required' => true, 'attr' => ['class' => 'input']])
@@ -44,7 +53,8 @@ class MailboxType extends AbstractType
         $resolver->setDefaults([
             // Configure your form options here
             'data_class' => Mailbox::class,
-            'user_id' => 0
+            'user_id' => 0,
+            'is_edit' => false,
         ]);
     }
 

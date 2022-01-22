@@ -48,6 +48,38 @@ class MailboxController extends AbstractController
         return $this->render('mailbox/create.html.twig', [
             'form' => $form->createView()
         ]);
+    }
 
+    #[Route('/mailbox/edit/{id}', name: 'mailbox_edit')]
+    public function edit(int $id, ManagerRegistry $mr, Request $request): Response
+    {
+        $mailbox = $mr->getRepository(Mailbox::class)->find($id);
+
+        if ($mailbox === null)
+            return $this->redirectToRoute('mailbox');
+
+        $password = $mailbox->getPassword();
+        //Check if the mailbox is owned by the user
+        if ($mailbox->getDomain()->getUser() === null || ($mailbox->getDomain()->getUser()->getId() !== $this->getUserOrThrow()->getId() && !$this->isGranted('ROLE_EDIT_ALL'))) {
+            return $this->redirectToRoute('mailbox');
+        }
+
+        $form = $this->createForm(MailboxType::class, $mailbox, ['user_id' => $this->getUserOrThrow()->getId(), 'is_edit' => true]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $mailbox->setDateModified(new \DateTimeImmutable());
+            if ($mailbox->getPassword() === "") {
+                //already hash !
+                $mailbox->setPassword($password);
+            }
+            $mr->getManager()->flush();
+            return $this->redirectToRoute('mailbox');
+        }
+
+
+        return $this->render('mailbox/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }
