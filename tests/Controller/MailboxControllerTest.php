@@ -9,7 +9,7 @@ class MailboxControllerTest extends WebTestCase
 {
     public function testIndexPage()
     {
-        $this->login('admin@domain.tld');
+        $this->login('admin@test.tld');
         $crawler = $this->client->request('GET', '/mailbox');
         $this->assertResponseIsSuccessful();
         self::assertEquals(25, $crawler->filter("#mailbox_table>tbody tr")->count());
@@ -18,7 +18,7 @@ class MailboxControllerTest extends WebTestCase
 
     public function testMailboxCreate()
     {
-        $this->login('admin@domain.tld');
+        $this->login('admin@test.tld');
         $crawler = $this->client->request('GET', '/mailbox');
         $crawler = $this->client->click($crawler->filter("#create_mailbox")->eq(0)->link());
         //dump($crawler);
@@ -41,7 +41,7 @@ class MailboxControllerTest extends WebTestCase
 
     public function testEdit(): void
     {
-        $this->login('admin@domain.tld');
+        $this->login('admin@test.tld');
         $crawler = $this->client->request('GET', '/mailbox');
         self::assertResponseIsSuccessful();
         $mailbox = $crawler->filter('#mailbox_table>tbody>tr:first-child>td:nth-child(2)>span')->innerText();
@@ -86,7 +86,7 @@ class MailboxControllerTest extends WebTestCase
 
     public function testDeactivateMailbox(): void
     {
-        $this->login('admin@domain.tld');
+        $this->login('admin@test.tld');
         $crawler = $this->client->request('GET', '/mailbox');
         self::assertResponseIsSuccessful();
         $mailboxHTML = $crawler->filter('#mailbox_table>tbody>tr:first-child>td:nth-child(2)>span')->innerText();
@@ -113,5 +113,31 @@ class MailboxControllerTest extends WebTestCase
 
         self::assertFalse($mailbox->getActive());
 
+    }
+
+    public function testDeleteMailbox(): void
+    {
+        $this->login('admin@test.tld');
+        $crawler = $this->client->request('GET', '/mailbox');
+        self::assertResponseIsSuccessful();
+        $mailboxHTML = $crawler->filter('#mailbox_table>tbody>tr:first-child>td:nth-child(2)>span')->innerText();
+        $mailbox_split = explode("@", $mailboxHTML);
+
+        $domain = $this->em->getRepository(Domain::class)->findOneBy(['domain' => $mailbox_split[1]]);
+        self::assertNotNull($domain);
+        $mailbox = $this->em->getRepository(Mailbox::class)->findOneBy(['username' => $mailbox_split[0], 'domain' => $domain]);
+        self::assertNotNull($mailbox);
+
+        //Delete crawler
+        $crawler = $this->client->click($crawler->filter('#mailbox_table>tbody>tr:first-child td:last-child a.delete')->eq(0)->link());
+        self::assertResponseRedirects();
+        $crawler = $this->client->followRedirect();
+
+        $this->em->clear(Mailbox::class);
+
+        $domain = $this->em->getRepository(Domain::class)->findOneBy(['domain' => $mailbox_split[1]]);
+        self::assertNotNull($domain);
+        $mailbox = $this->em->getRepository(Mailbox::class)->findOneBy(['username' => $mailbox_split[0], 'domain' => $domain]);
+        self::assertNull($mailbox);
     }
 }

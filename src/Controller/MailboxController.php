@@ -101,4 +101,22 @@ class MailboxController extends AbstractController
         return $this->redirectToRoute('mailbox');
 
     }
+
+    #[Route("/admin/delete/{id}", name: "delete_mailbox")]
+    public function delete(int $id, ManagerRegistry $mr): Response
+    {
+        $mailbox = $mr->getRepository(Mailbox::class)->find($id);
+        if ($mailbox === null)
+            return $this->redirectToRoute('mailbox');
+        //Check if the mailbox is owned by the user
+        if ($mailbox->getDomain()->getUser() === null || ($mailbox->getDomain()->getUser()->getId() !== $this->getUserOrThrow()->getId() && !$this->isGranted('ROLE_DELETE_ALL'))) {
+            return $this->redirectToRoute('mailbox');
+        }
+
+        $mr->getManager()->remove($mailbox);
+        $mr->getManager()->flush();
+
+        return $this->redirectToRoute('mailbox');
+
+    }
 }

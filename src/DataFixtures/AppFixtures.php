@@ -32,6 +32,12 @@ class AppFixtures extends Fixture
         $this->addReference(self::ADMIN_REFERENCE, $user);
         $manager->persist($user);
 
+
+        $user_without_permissions = new User();
+        $user_without_permissions->setUsername("user@test.tld");
+        $user_without_permissions->setPassword($factoryPassword->hash('test'));
+        $manager->persist($user_without_permissions);
+
         /**
          * Domains creation
          */
