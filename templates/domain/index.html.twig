@@ -23,7 +23,7 @@
         <div class="box-header">
             <h2>My domains</h2>
             {% if is_granted('ROLE_CREATE') %}
-                <a href="{{ path('domain_create') }}" class="button button-success"><span
+                <a href="{{ path('domain_create') }}" class="button button-success" id="add_domain_btn"><span
                             class="material-icons">add</span> Add a domain</a>
             {% endif %}
         </div>

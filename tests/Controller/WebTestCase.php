@@ -28,7 +28,7 @@ class WebTestCase extends \Symfony\Bundle\FrameworkBundle\Test\WebTestCase
 
     protected function login(string $username)
     {
-        $user = $this->em->getRepository(User::class)->findOneBy(['username' => 'admin@test.tld']);
+        $user = $this->em->getRepository(User::class)->findOneBy(['username' => $username]);
         if ($user === null) {
             throw new Exception("User {$username} has not been found");
         }
