@@ -10,7 +10,7 @@ class DomainControllerTest extends WebTestCase
 
     public function testLoadViewPages(): void
     {
-        $this->login('admin@domain.tld');
+        $this->login('admin@test.tld');
 
         $this->client->request('GET', '/domain');
         $this->assertResponseIsSuccessful();
@@ -20,7 +20,7 @@ class DomainControllerTest extends WebTestCase
 
     public function testCountDomain(): void
     {
-        $this->login('admin@domain.tld');
+        $this->login('admin@test.tld');
 
         $crawler = $this->client->request('GET', '/domain');
         $this->assertResponseIsSuccessful();
@@ -29,7 +29,7 @@ class DomainControllerTest extends WebTestCase
 
     public function testAddDomain(): void
     {
-        $this->login('admin@domain.tld');
+        $this->login('admin@test.tld');
         $this->client->request('GET', '/domain');
         $crawler = $this->client->clickLink('Add a domain');
         $this->assertRouteSame('domain_create');
@@ -54,9 +54,16 @@ class DomainControllerTest extends WebTestCase
         $this->assertEquals(true, $domain->getIsActive());
     }
 
+    public function testCantAddDomain()
+    {
+        $this->login('user@test.tld');
+        $crawler = $this->client->request('GET', '/domain');
+        self::assertEquals(0, $crawler->filter("#add_domain_btn")->count());
+    }
+
     public function testDeleteDomain(): void
     {
-        $this->login('admin@domain.tld');
+        $this->login('admin@test.tld');
         $crawler = $this->client->request('GET', '/domain');
         $domain_name = $crawler->filter("table#domains_table>tbody>tr:first-child td:nth-child(2) span")->getNode(0)->textContent;
         $this->client->click($crawler->filter("table#domains_table>tbody>tr:first-child td:last-child a:last-child")->eq(0)->link());
@@ -73,7 +80,7 @@ class DomainControllerTest extends WebTestCase
 
     public function testDisableDomain(): void
     {
-        $this->login('admin@domain.tld');
+        $this->login('admin@test.tld');
         $crawler = $this->client->request('GET', '/domain');
         $domain_name = $crawler->filter("table#domains_table>tbody>tr:first-child td:nth-child(2) span")->getNode(0)->textContent;
         $this->client->click($crawler->filter("table#domains_table>tbody>tr:first-child td:last-child a:nth-child(2)")->eq(0)->link());
@@ -88,7 +95,7 @@ class DomainControllerTest extends WebTestCase
 
     public function testEditDomain(): void
     {
-        $this->login('admin@domain.tld');
+        $this->login('admin@test.tld');
         $crawler = $this->client->request('GET', '/domain');
         $domain_name = $crawler->filter("table#domains_table>tbody>tr:first-child td:nth-child(2) span")->getNode(0)->textContent;
         $this->client->click($crawler->filter("table#domains_table>tbody>tr:first-child td:last-child a:nth-child(3)")->eq(0)->link());
@@ -120,7 +127,7 @@ class DomainControllerTest extends WebTestCase
 
     public function testViewDomain(): void
     {
-        $this->login('admin@domain.tld');
+        $this->login('admin@test.tld');
         $crawler = $this->client->request('GET', '/domain');
         $domain_name = $crawler->filter("table#domains_table>tbody>tr:first-child td:nth-child(2) span")->getNode(0)->textContent;
         $crawler = $this->client->click($crawler->filter("table#domains_table>tbody>tr:first-child td:last-child a:nth-child(1)")->eq(0)->link());
