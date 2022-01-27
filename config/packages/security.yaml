@@ -11,12 +11,13 @@ security:
                 class: App\Entity\User
                 property: username
     role_hierarchy:
-        ROLE_ADMIN: ROLE_USER, ROLE_VIEW_ALL, ROLE_CREATE, ROLE_EDIT_ALL, ROLE_DELETE_ALL
-        ROLE_DELETE_ALL: ROLE_DELETE
-        ROLE_DELETE: ROLE_DEACTIVATE_ALL
-        ROLE_DEACTIVATE_ALL: ROLE_DEACTIVATE
-        ROLE_EDIT_ALL: ROLE_EDIT
+        ROLE_ADMIN: ROLE_USER, ROLE_VIEW_ALL, ROLE_DOMAIN_ALL, ROLE_MAILBOX_ALL, ROLE_MAILBOX_ALIAS_ALL, ROLE_DOMAIN_ALIAS_ALL
         ROLE_VIEW_ALL: ROLE_VIEW
+        # New permission
+        ROLE_DOMAIN_ALL: ROLE_DOMAIN_DEACTIVATE, ROLE_DOMAIN_CREATE, ROLE_DOMAIN_EDIT, ROLE_DOMAIN_DELETE
+        ROLE_MAILBOX_ALL: ROLE_MAILBOX_DEACTIVATE, ROLE_MAILBOX_CREATE, ROLE_MAILBOX_EDIT, ROLE_MAILBOX_DELETE
+        ROLE_MAILBOX_ALIAS_ALL: ROLE_MAILBOX_ALIAS_DEACTIVATE, ROLE_MAILBOX_ALIAS_CREATE, ROLE_MAILBOX_ALIAS_EDIT,ROLE_MAILBOX_ALIAS_DELETE
+        ROLE_DOMAIN_ALIAS_ALL: ROLE_DOMAIN_ALIAS_DEACTIVATE, ROLE_DOMAIN_ALIAS_CREATE, ROLE_DOMAIN_ALIAS_EDIT,ROLE_DOMAIN_ALIAS_DELETE
         ROLE_USER: ROLE_VIEW
 
     firewalls:
@@ -41,7 +42,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - {path: ^/login, roles: PUBLIC_ACCESS}
-        - {path: ^/template, roles: PUBLIC_ACCESS}
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/template, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }

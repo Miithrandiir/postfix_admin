@@ -28,6 +28,10 @@ class MailboxController extends AbstractController
     #[Route('/mailbox/create', name: 'mailbox_create')]
     public function create(Request $request, ManagerRegistry $managerRegistry, SodiumPasswordHasher $mailboxhasher): Response
     {
+
+        if (!$this->isGranted('ROLE_MAILBOX_CREATE'))
+            return $this->redirectToRoute('mailbox');
+
         $mailbox = new Mailbox();
         $form = $this->createForm(MailboxType::class, $mailbox, ['user_id' => $this->getUserOrThrow()->getId()]);
 
@@ -57,6 +61,10 @@ class MailboxController extends AbstractController
     #[Route('/mailbox/edit/{id}', name: 'mailbox_edit')]
     public function edit(int $id, ManagerRegistry $mr, Request $request, SodiumPasswordHasher $mailboxhasher): Response
     {
+
+        if (!$this->isGranted('ROLE_MAILBOX_EDIT'))
+            return $this->redirectToRoute('mailbox');
+
         $mailbox = $mr->getRepository(Mailbox::class)->find($id);
 
         if ($mailbox === null)
@@ -92,6 +100,10 @@ class MailboxController extends AbstractController
     #[Route("/admin/deactivate/{id}")]
     public function deactivate(int $id, ManagerRegistry $mr): Response
     {
+
+        if (!$this->isGranted('ROLE_MAILBOX_DEACTIVATE'))
+            return $this->redirectToRoute('mailbox');
+
         $mailbox = $mr->getRepository(Mailbox::class)->find($id);
         if ($mailbox === null)
             return $this->redirectToRoute('mailbox');
@@ -111,6 +123,9 @@ class MailboxController extends AbstractController
     #[Route("/admin/delete/{id}", name: "delete_mailbox")]
     public function delete(int $id, ManagerRegistry $mr): Response
     {
+        if (!$this->isGranted('ROLE_MAILBOX_DELETE'))
+            return $this->redirectToRoute('mailbox');
+
         $mailbox = $mr->getRepository(Mailbox::class)->find($id);
         if ($mailbox === null)
             return $this->redirectToRoute('mailbox');

@@ -17,7 +17,7 @@
     <div id="mailbox" class="box">
         <div class="box-header">
             <h2>My Mailboxes</h2>
-            {% if is_granted('ROLE_CREATE') %}
+            {% if is_granted('ROLE_MAILBOX_CREATE') %}
                 <a href="{{ path('mailbox_create') }}" class="button button-success" id="create_mailbox"><span
                             class="material-icons">add</span> Add a mailbox</a>
             {% endif %}
@@ -66,7 +66,7 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {% if is_granted('ROLE_DEACTIVATE') %}
+                                {% if is_granted('ROLE_MAILBOX_DEACTIVATE') %}
                                     <a class="button button-warning deactivate"
                                        href="{{ path('app_mailbox_deactivate', {'id': mailbox.id}) }}"
                                        title="deactivate">
@@ -74,7 +74,7 @@
                                     </a>
                                 {% endif %}
 
-                                {% if is_granted('ROLE_EDIT') %}
+                                {% if is_granted('ROLE_MAILBOX_EDIT') %}
                                     <a class="button button-primary edit"
                                        href="{{ path('mailbox_edit', {'id': mailbox.id}) }}"
                                        title="edit">
@@ -82,7 +82,7 @@
                                     </a>
                                 {% endif %}
 
-                                {% if is_granted('ROLE_DELETE') %}
+                                {% if is_granted('ROLE_MAILBOX_DELETE') %}
                                     <a class="button button-danger delete"
                                        onclick="return confirm('Are you sure, you want to delete this mailbox ?')"
                                        href="{{ path('delete_mailbox', {'id': mailbox.id}) }}"

@@ -22,7 +22,7 @@
     <div class="domains box">
         <div class="box-header">
             <h2>My domains</h2>
-            {% if is_granted('ROLE_CREATE') %}
+            {% if is_granted('ROLE_DOMAIN_CREATE') %}
                 <a href="{{ path('domain_create') }}" class="button button-success" id="add_domain_btn"><span
                             class="material-icons">add</span> Add a domain</a>
             {% endif %}
@@ -83,21 +83,21 @@
                             <a class="button button-success" href="{{ path('domain_view', {'id': item.id}) }}">
                                 <span class="material-icons">visibility</span>
                             </a>
-                            {% if is_granted('ROLE_DEACTIVATE') %}
+                            {% if is_granted('ROLE_DOMAIN_DEACTIVATE') %}
                                 <a class="button button-warning" href="{{ path('domain_activation', {'id': item.id}) }}"
                                    title="deactivate">
                                     <span class="material-icons">{{ item.isActive ? 'power_off' : 'power' }}</span>
                                 </a>
                             {% endif %}
 
-                            {% if is_granted('ROLE_EDIT') %}
+                            {% if is_granted('ROLE_DOMAIN_EDIT') %}
                                 <a class="button button-primary" href="{{ path('domain_edit', {'id': item.id}) }}"
                                    title="edit">
                                     <span class="material-icons">edit</span>
                                 </a>
                             {% endif %}
 
-                            {% if is_granted('ROLE_DELETE') %}
+                            {% if is_granted('ROLE_DOMAIN_DELETE') %}
                                 <a class="button button-danger"
                                    onclick="return confirm('Are you sure, you want to delete this domain ?')"
                                    href="{{ path('domain_delete', {'id': item.id}) }}"

@@ -26,7 +26,7 @@ class DomainController extends AbstractController
     #[Route('/domain/create', name: 'domain_create')]
     public function create(Request $request, ManagerRegistry $managerRegistry): Response
     {
-        if (!$this->isGranted('ROLE_CREATE')) {
+        if (!$this->isGranted('ROLE_DOMAIN_CREATE')) {
             return $this->permissionsErrorRedirect('domain');
         }
 
@@ -78,7 +78,7 @@ class DomainController extends AbstractController
     #[Route('/domain/activation/{id}', name: 'domain_activation')]
     public function activation(int $id, ManagerRegistry $managerRegistry): Response
     {
-        if (!$this->isGranted('ROLE_DEACTIVATE')) {
+        if (!$this->isGranted('ROLE_DOMAIN_DEACTIVATE')) {
             return $this->permissionsErrorRedirect('domain');
         }
 
@@ -90,7 +90,7 @@ class DomainController extends AbstractController
             $domainArr[array_key_first($domainArr)]->setIsActive(!$domainArr[array_key_first($domainArr)]->getIsActive());
             $managerRegistry->getManager()->flush();
         } else {
-            if (!$this->isGranted('ROLE_DEACTIVATE_ALL')) {
+            if (!$this->isGranted('ROLE_DOMAIN_ALL')) {
                 return $this->permissionsErrorRedirect('domain');
             }
 
@@ -112,7 +112,7 @@ class DomainController extends AbstractController
     #[Route('domain/edit/{id}', name: 'domain_edit')]
     public function edit(int $id, ManagerRegistry $managerRegistry, Request $request): Response
     {
-        if (!$this->isGranted('ROLE_EDIT')) {
+        if (!$this->isGranted('ROLE_DOMAIN_EDIT')) {
             return $this->permissionsErrorRedirect('domain');
         }
 
@@ -120,7 +120,7 @@ class DomainController extends AbstractController
         $domain = array_filter($domains->toArray(), fn(Domain $v) => $v->getId() === $id);
 
         if (\count($domain) === 0) {
-            if (!$this->isGranted('ROLE_EDIT_ALL')) {
+            if (!$this->isGranted('ROLE_DOMAIN_ALL')) {
                 return $this->permissionsErrorRedirect('domain');
             }
             $domain = $managerRegistry->getRepository(Domain::class)->find($id);
@@ -149,7 +149,7 @@ class DomainController extends AbstractController
     #[Route('domain/delete/{id}', name: 'domain_delete')]
     public function delete(int $id, ManagerRegistry $managerRegistry): Response
     {
-        if (!$this->isGranted('ROLE_DELETE')) {
+        if (!$this->isGranted('ROLE_DOMAIN_DELETE')) {
             return $this->permissionsErrorRedirect('domain');
         }
 
@@ -157,7 +157,7 @@ class DomainController extends AbstractController
         $domain = array_filter($domains->toArray(), fn(Domain $v) => $v->getId() === $id);
 
         if (\count($domain) === 0) {
-            if (!$this->isGranted('ROLE_DELETE_ALL')) {
+            if (!$this->isGranted('ROLE_DOMAIN_ALL')) {
                 return $this->permissionsErrorRedirect('domain');
             }
 
