@@ -18,4 +18,10 @@ class AliasController extends AbstractController
             'domains' => $domains,
         ]);
     }
+
+    #[Route('/alias/deactivate/{id}')]
+    public function deactivate(int $id) : Response
+    {
+
+    }
 }

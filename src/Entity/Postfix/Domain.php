@@ -308,4 +308,14 @@ class Domain
         return $this;
     }
 
+    public function addDestinationAlias(AliasDomain $destinationAlias): self
+    {
+        if (!$this->destinationAlias->contains($destinationAlias)) {
+            $this->destinationAlias[] = $destinationAlias;
+            $destinationAlias->setDestination($this);
+        }
+
+        return $this;
+    }
+
 }

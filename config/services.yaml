@@ -10,6 +10,8 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            Symfony\Component\PasswordHasher\Hasher\SodiumPasswordHasher $mailboxhasher: '@app.service.mailboxhasher'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -23,6 +25,10 @@ services:
     App\Services\ViteAssetExtension:
         arguments:
             $manifest: '%kernel.project_dir%/public/build/manifest.json'
-
+    app.service.mailboxhasher:
+        class: 'Symfony\Component\PasswordHasher\Hasher\SodiumPasswordHasher'
+        arguments:
+            $opsLimit: null
+            $memLimit: null
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

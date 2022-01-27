@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Postfix\Alias;
+use App\Entity\Postfix\AliasDomain;
 use App\Entity\Postfix\Domain;
 use App\Entity\Postfix\Mailbox;
 use App\Entity\User;
@@ -38,6 +39,8 @@ class AppFixtures extends Fixture
         $user_without_permissions->setPassword($factoryPassword->hash('test'));
         $manager->persist($user_without_permissions);
 
+        $domains = [];
+
         /**
          * Domains creation
          */
@@ -53,6 +56,7 @@ class AppFixtures extends Fixture
             $domain->setNbAliases(0);
             $domain->setNbMailboxes(0);
             $domain->setMaxQuota(0);
+            $domains[] = $domain;
             $manager->persist($domain);
             /**
              * Mailboxes creation
@@ -84,6 +88,19 @@ class AppFixtures extends Fixture
                 $manager->persist($alias);
             }
         }
+
+        $domainAlias = new AliasDomain();
+        $domainAlias->setIsActive(true);
+        $domainAlias->setDateModified(new \DateTimeImmutable());
+        $domainAlias->setDateCreated(new \DateTimeImmutable());
+
+        $domainAlias->setOrigine($domains[0]);
+        $domainAlias->setDestination($domains[1]);
+        $domains[0]->addOrigineAlias($domainAlias);
+        $domains[1]->addDestinationAlias($domainAlias);
+
+
+        $manager->persist($domainAlias);
 
 
         $manager->flush();

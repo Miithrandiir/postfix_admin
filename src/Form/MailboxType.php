@@ -33,7 +33,7 @@ class MailboxType extends AbstractType
             ->add('username', TextType::class, ['required' => true, 'attr' => ['class' => 'input']]);
 
         if ($options['is_edit']) {
-            $builder->add('password', PasswordType::class, ['required' => false, 'attr' => ['class' => 'input'], 'empty_data' => ""]);
+            $builder->add('password', PasswordType::class, ['required' => false, 'attr' => ['class' => 'input'], 'empty_data' => "", 'help' => "Leave empty if no change"]);
         } else {
             $builder
                 ->add('password', PasswordType::class, ['required' => true, 'attr' => ['class' => 'input']]);

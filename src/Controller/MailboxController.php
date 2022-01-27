@@ -10,6 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\SodiumPasswordHasher;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MailboxController extends AbstractController
@@ -25,7 +26,7 @@ class MailboxController extends AbstractController
     }
 
     #[Route('/mailbox/create', name: 'mailbox_create')]
-    public function create(Request $request, ManagerRegistry $managerRegistry): Response
+    public function create(Request $request, ManagerRegistry $managerRegistry, SodiumPasswordHasher $mailboxhasher): Response
     {
         $mailbox = new Mailbox();
         $form = $this->createForm(MailboxType::class, $mailbox, ['user_id' => $this->getUserOrThrow()->getId()]);
@@ -39,6 +40,9 @@ class MailboxController extends AbstractController
             }
             $mailbox->setDateModified(new \DateTimeImmutable());
             $mailbox->setDateCreated(new \DateTimeImmutable());
+
+            $mailbox->setPassword('{ARGON2ID}' . $mailboxhasher->hash($mailbox->getPassword()));
+
             $em = $managerRegistry->getManager();
             $em->persist($mailbox);
             $em->flush();
@@ -51,7 +55,7 @@ class MailboxController extends AbstractController
     }
 
     #[Route('/mailbox/edit/{id}', name: 'mailbox_edit')]
-    public function edit(int $id, ManagerRegistry $mr, Request $request): Response
+    public function edit(int $id, ManagerRegistry $mr, Request $request, SodiumPasswordHasher $mailboxhasher): Response
     {
         $mailbox = $mr->getRepository(Mailbox::class)->find($id);
 
@@ -72,6 +76,8 @@ class MailboxController extends AbstractController
             if ($mailbox->getPassword() === "") {
                 //already hash !
                 $mailbox->setPassword($password);
+            } else {
+                $mailbox->setPassword('{ARGON2ID}' . $mailboxhasher->hash($mailbox->getPassword()));
             }
             $mr->getManager()->flush();
             return $this->redirectToRoute('mailbox');
