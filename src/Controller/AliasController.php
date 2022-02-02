@@ -91,4 +91,54 @@ class AliasController extends AbstractController
 
         return $this->redirectToRoute('alias');
     }
+
+    #[Route('/alias/mailbox/delete/{id}', name: 'delete_alias_mailbox')]
+    public function delete_mailbox_alias(int $id): Response
+    {
+        if (!$this->isGranted("ROLE_MAILBOX_ALIAS_DELETE")) {
+            return $this->redirectToRoute('alias');
+        }
+
+        $mailbox_alias = $this->managerRegistry->getRepository(Alias::class)->find($id);
+        if ($mailbox_alias == null) {
+            return $this->redirectToRoute('alias');
+        }
+
+        # check if the user own the domain or has suffisent permissions
+        if ($mailbox_alias->getDomain() !== null && $mailbox_alias->getDomain()->getUser() !== null && $mailbox_alias->getDomain()->getUser()->getId() === $this->getUserOrThrow()->getId() || $this->isGranted("ROLE_MAILBOX_ALIAS_ALL")) {
+            $this->managerRegistry->getManager()->remove($mailbox_alias);
+            $this->managerRegistry->getManager()->flush();
+            return $this->redirectToRoute('alias');
+        }
+
+        # do nothing because he doesn't have enough permissions
+
+        return $this->redirectToRoute('alias');
+
+    }
+
+    #[Route('/alias/domain/delete/{id}', name: 'delete_alias_domain')]
+    public function delete_domain_alias(int $id): Response
+    {
+        if (!$this->isGranted("ROLE_DOMAIN_ALIAS_DELETE")) {
+            return $this->redirectToRoute('alias');
+        }
+
+        $domain_alias = $this->managerRegistry->getRepository(AliasDomain::class)->find($id);
+        if ($domain_alias == null) {
+            return $this->redirectToRoute('alias');
+        }
+
+        # check if the user own the domain or has suffisent permissions
+        if ($domain_alias->getDestination()->getUser() !== null && $domain_alias->getDestination()->getUser()->getId() === $this->getUserOrThrow()->getId() || $this->isGranted("ROLE_DOMAIN_ALIAS_ALL")) {
+            $this->managerRegistry->getManager()->remove($domain_alias);
+            $this->managerRegistry->getManager()->flush();
+            return $this->redirectToRoute('alias');
+        }
+
+        # do nothing because he doesn't have enough permissions
+
+        return $this->redirectToRoute('alias');
+
+    }
 }
